@@ -1,0 +1,802 @@
+[
+  {
+    "id": 1,
+    "protocol": "TCP",
+    "dst_port": 81,
+    "flags": "PA",
+    "payload_pattern": "pattern1",
+    "description": "Generated Rule Pattern 1"
+  },
+  {
+    "id": 2,
+    "protocol": "TCP",
+    "dst_port": 82,
+    "flags": "S",
+    "payload_pattern": "pattern2",
+    "description": "Generated Rule Pattern 2"
+  },
+  {
+    "id": 3,
+    "protocol": "TCP",
+    "dst_port": 83,
+    "flags": "PA",
+    "payload_pattern": "pattern3",
+    "description": "Generated Rule Pattern 3"
+  },
+  {
+    "id": 4,
+    "protocol": "TCP",
+    "dst_port": 84,
+    "flags": "S",
+    "payload_pattern": "pattern4",
+    "description": "Generated Rule Pattern 4"
+  },
+  {
+    "id": 5,
+    "protocol": "TCP",
+    "dst_port": 85,
+    "flags": "PA",
+    "payload_pattern": "pattern5",
+    "description": "Generated Rule Pattern 5"
+  },
+  {
+    "id": 6,
+    "protocol": "TCP",
+    "dst_port": 86,
+    "flags": "S",
+    "payload_pattern": "pattern6",
+    "description": "Generated Rule Pattern 6"
+  },
+  {
+    "id": 7,
+    "protocol": "TCP",
+    "dst_port": 87,
+    "flags": "PA",
+    "payload_pattern": "pattern7",
+    "description": "Generated Rule Pattern 7"
+  },
+  {
+    "id": 8,
+    "protocol": "TCP",
+    "dst_port": 88,
+    "flags": "S",
+    "payload_pattern": "pattern8",
+    "description": "Generated Rule Pattern 8"
+  },
+  {
+    "id": 9,
+    "protocol": "TCP",
+    "dst_port": 89,
+    "flags": "PA",
+    "payload_pattern": "pattern9",
+    "description": "Generated Rule Pattern 9"
+  },
+  {
+    "id": 10,
+    "protocol": "TCP",
+    "dst_port": 80,
+    "flags": "S",
+    "payload_pattern": "pattern10",
+    "description": "Generated Rule Pattern 10"
+  },
+  {
+    "id": 11,
+    "protocol": "TCP",
+    "dst_port": 81,
+    "flags": "PA",
+    "payload_pattern": "pattern11",
+    "description": "Generated Rule Pattern 11"
+  },
+  {
+    "id": 12,
+    "protocol": "TCP",
+    "dst_port": 82,
+    "flags": "S",
+    "payload_pattern": "pattern12",
+    "description": "Generated Rule Pattern 12"
+  },
+  {
+    "id": 13,
+    "protocol": "TCP",
+    "dst_port": 83,
+    "flags": "PA",
+    "payload_pattern": "pattern13",
+    "description": "Generated Rule Pattern 13"
+  },
+  {
+    "id": 14,
+    "protocol": "TCP",
+    "dst_port": 84,
+    "flags": "S",
+    "payload_pattern": "pattern14",
+    "description": "Generated Rule Pattern 14"
+  },
+  {
+    "id": 15,
+    "protocol": "TCP",
+    "dst_port": 85,
+    "flags": "PA",
+    "payload_pattern": "pattern15",
+    "description": "Generated Rule Pattern 15"
+  },
+  {
+    "id": 16,
+    "protocol": "TCP",
+    "dst_port": 86,
+    "flags": "S",
+    "payload_pattern": "pattern16",
+    "description": "Generated Rule Pattern 16"
+  },
+  {
+    "id": 17,
+    "protocol": "TCP",
+    "dst_port": 87,
+    "flags": "PA",
+    "payload_pattern": "pattern17",
+    "description": "Generated Rule Pattern 17"
+  },
+  {
+    "id": 18,
+    "protocol": "TCP",
+    "dst_port": 88,
+    "flags": "S",
+    "payload_pattern": "pattern18",
+    "description": "Generated Rule Pattern 18"
+  },
+  {
+    "id": 19,
+    "protocol": "TCP",
+    "dst_port": 89,
+    "flags": "PA",
+    "payload_pattern": "pattern19",
+    "description": "Generated Rule Pattern 19"
+  },
+  {
+    "id": 20,
+    "protocol": "TCP",
+    "dst_port": 80,
+    "flags": "S",
+    "payload_pattern": "pattern20",
+    "description": "Generated Rule Pattern 20"
+  },
+  {
+    "id": 21,
+    "protocol": "TCP",
+    "dst_port": 81,
+    "flags": "PA",
+    "payload_pattern": "pattern21",
+    "description": "Generated Rule Pattern 21"
+  },
+  {
+    "id": 22,
+    "protocol": "TCP",
+    "dst_port": 82,
+    "flags": "S",
+    "payload_pattern": "pattern22",
+    "description": "Generated Rule Pattern 22"
+  },
+  {
+    "id": 23,
+    "protocol": "TCP",
+    "dst_port": 83,
+    "flags": "PA",
+    "payload_pattern": "pattern23",
+    "description": "Generated Rule Pattern 23"
+  },
+  {
+    "id": 24,
+    "protocol": "TCP",
+    "dst_port": 84,
+    "flags": "S",
+    "payload_pattern": "pattern24",
+    "description": "Generated Rule Pattern 24"
+  },
+  {
+    "id": 25,
+    "protocol": "TCP",
+    "dst_port": 85,
+    "flags": "PA",
+    "payload_pattern": "pattern25",
+    "description": "Generated Rule Pattern 25"
+  },
+  {
+    "id": 26,
+    "protocol": "TCP",
+    "dst_port": 86,
+    "flags": "S",
+    "payload_pattern": "pattern26",
+    "description": "Generated Rule Pattern 26"
+  },
+  {
+    "id": 27,
+    "protocol": "TCP",
+    "dst_port": 87,
+    "flags": "PA",
+    "payload_pattern": "pattern27",
+    "description": "Generated Rule Pattern 27"
+  },
+  {
+    "id": 28,
+    "protocol": "TCP",
+    "dst_port": 88,
+    "flags": "S",
+    "payload_pattern": "pattern28",
+    "description": "Generated Rule Pattern 28"
+  },
+  {
+    "id": 29,
+    "protocol": "TCP",
+    "dst_port": 89,
+    "flags": "PA",
+    "payload_pattern": "pattern29",
+    "description": "Generated Rule Pattern 29"
+  },
+  {
+    "id": 30,
+    "protocol": "TCP",
+    "dst_port": 80,
+    "flags": "S",
+    "payload_pattern": "pattern30",
+    "description": "Generated Rule Pattern 30"
+  },
+  {
+    "id": 31,
+    "protocol": "TCP",
+    "dst_port": 81,
+    "flags": "PA",
+    "payload_pattern": "pattern31",
+    "description": "Generated Rule Pattern 31"
+  },
+  {
+    "id": 32,
+    "protocol": "TCP",
+    "dst_port": 82,
+    "flags": "S",
+    "payload_pattern": "pattern32",
+    "description": "Generated Rule Pattern 32"
+  },
+  {
+    "id": 33,
+    "protocol": "TCP",
+    "dst_port": 83,
+    "flags": "PA",
+    "payload_pattern": "pattern33",
+    "description": "Generated Rule Pattern 33"
+  },
+  {
+    "id": 34,
+    "protocol": "TCP",
+    "dst_port": 84,
+    "flags": "S",
+    "payload_pattern": "pattern34",
+    "description": "Generated Rule Pattern 34"
+  },
+  {
+    "id": 35,
+    "protocol": "TCP",
+    "dst_port": 85,
+    "flags": "PA",
+    "payload_pattern": "pattern35",
+    "description": "Generated Rule Pattern 35"
+  },
+  {
+    "id": 36,
+    "protocol": "TCP",
+    "dst_port": 86,
+    "flags": "S",
+    "payload_pattern": "pattern36",
+    "description": "Generated Rule Pattern 36"
+  },
+  {
+    "id": 37,
+    "protocol": "TCP",
+    "dst_port": 87,
+    "flags": "PA",
+    "payload_pattern": "pattern37",
+    "description": "Generated Rule Pattern 37"
+  },
+  {
+    "id": 38,
+    "protocol": "TCP",
+    "dst_port": 88,
+    "flags": "S",
+    "payload_pattern": "pattern38",
+    "description": "Generated Rule Pattern 38"
+  },
+  {
+    "id": 39,
+    "protocol": "TCP",
+    "dst_port": 89,
+    "flags": "PA",
+    "payload_pattern": "pattern39",
+    "description": "Generated Rule Pattern 39"
+  },
+  {
+    "id": 40,
+    "protocol": "TCP",
+    "dst_port": 80,
+    "flags": "S",
+    "payload_pattern": "pattern40",
+    "description": "Generated Rule Pattern 40"
+  },
+  {
+    "id": 41,
+    "protocol": "TCP",
+    "dst_port": 81,
+    "flags": "PA",
+    "payload_pattern": "pattern41",
+    "description": "Generated Rule Pattern 41"
+  },
+  {
+    "id": 42,
+    "protocol": "TCP",
+    "dst_port": 82,
+    "flags": "S",
+    "payload_pattern": "pattern42",
+    "description": "Generated Rule Pattern 42"
+  },
+  {
+    "id": 43,
+    "protocol": "TCP",
+    "dst_port": 83,
+    "flags": "PA",
+    "payload_pattern": "pattern43",
+    "description": "Generated Rule Pattern 43"
+  },
+  {
+    "id": 44,
+    "protocol": "TCP",
+    "dst_port": 84,
+    "flags": "S",
+    "payload_pattern": "pattern44",
+    "description": "Generated Rule Pattern 44"
+  },
+  {
+    "id": 45,
+    "protocol": "TCP",
+    "dst_port": 85,
+    "flags": "PA",
+    "payload_pattern": "pattern45",
+    "description": "Generated Rule Pattern 45"
+  },
+  {
+    "id": 46,
+    "protocol": "TCP",
+    "dst_port": 86,
+    "flags": "S",
+    "payload_pattern": "pattern46",
+    "description": "Generated Rule Pattern 46"
+  },
+  {
+    "id": 47,
+    "protocol": "TCP",
+    "dst_port": 87,
+    "flags": "PA",
+    "payload_pattern": "pattern47",
+    "description": "Generated Rule Pattern 47"
+  },
+  {
+    "id": 48,
+    "protocol": "TCP",
+    "dst_port": 88,
+    "flags": "S",
+    "payload_pattern": "pattern48",
+    "description": "Generated Rule Pattern 48"
+  },
+  {
+    "id": 49,
+    "protocol": "TCP",
+    "dst_port": 89,
+    "flags": "PA",
+    "payload_pattern": "pattern49",
+    "description": "Generated Rule Pattern 49"
+  },
+  {
+    "id": 50,
+    "protocol": "TCP",
+    "dst_port": 80,
+    "flags": "S",
+    "payload_pattern": "pattern50",
+    "description": "Generated Rule Pattern 50"
+  },
+  {
+    "id": 51,
+    "protocol": "TCP",
+    "dst_port": 81,
+    "flags": "PA",
+    "payload_pattern": "pattern51",
+    "description": "Generated Rule Pattern 51"
+  },
+  {
+    "id": 52,
+    "protocol": "TCP",
+    "dst_port": 82,
+    "flags": "S",
+    "payload_pattern": "pattern52",
+    "description": "Generated Rule Pattern 52"
+  },
+  {
+    "id": 53,
+    "protocol": "TCP",
+    "dst_port": 83,
+    "flags": "PA",
+    "payload_pattern": "pattern53",
+    "description": "Generated Rule Pattern 53"
+  },
+  {
+    "id": 54,
+    "protocol": "TCP",
+    "dst_port": 84,
+    "flags": "S",
+    "payload_pattern": "pattern54",
+    "description": "Generated Rule Pattern 54"
+  },
+  {
+    "id": 55,
+    "protocol": "TCP",
+    "dst_port": 85,
+    "flags": "PA",
+    "payload_pattern": "pattern55",
+    "description": "Generated Rule Pattern 55"
+  },
+  {
+    "id": 56,
+    "protocol": "TCP",
+    "dst_port": 86,
+    "flags": "S",
+    "payload_pattern": "pattern56",
+    "description": "Generated Rule Pattern 56"
+  },
+  {
+    "id": 57,
+    "protocol": "TCP",
+    "dst_port": 87,
+    "flags": "PA",
+    "payload_pattern": "pattern57",
+    "description": "Generated Rule Pattern 57"
+  },
+  {
+    "id": 58,
+    "protocol": "TCP",
+    "dst_port": 88,
+    "flags": "S",
+    "payload_pattern": "pattern58",
+    "description": "Generated Rule Pattern 58"
+  },
+  {
+    "id": 59,
+    "protocol": "TCP",
+    "dst_port": 89,
+    "flags": "PA",
+    "payload_pattern": "pattern59",
+    "description": "Generated Rule Pattern 59"
+  },
+  {
+    "id": 60,
+    "protocol": "TCP",
+    "dst_port": 80,
+    "flags": "S",
+    "payload_pattern": "pattern60",
+    "description": "Generated Rule Pattern 60"
+  },
+  {
+    "id": 61,
+    "protocol": "TCP",
+    "dst_port": 81,
+    "flags": "PA",
+    "payload_pattern": "pattern61",
+    "description": "Generated Rule Pattern 61"
+  },
+  {
+    "id": 62,
+    "protocol": "TCP",
+    "dst_port": 82,
+    "flags": "S",
+    "payload_pattern": "pattern62",
+    "description": "Generated Rule Pattern 62"
+  },
+  {
+    "id": 63,
+    "protocol": "TCP",
+    "dst_port": 83,
+    "flags": "PA",
+    "payload_pattern": "pattern63",
+    "description": "Generated Rule Pattern 63"
+  },
+  {
+    "id": 64,
+    "protocol": "TCP",
+    "dst_port": 84,
+    "flags": "S",
+    "payload_pattern": "pattern64",
+    "description": "Generated Rule Pattern 64"
+  },
+  {
+    "id": 65,
+    "protocol": "TCP",
+    "dst_port": 85,
+    "flags": "PA",
+    "payload_pattern": "pattern65",
+    "description": "Generated Rule Pattern 65"
+  },
+  {
+    "id": 66,
+    "protocol": "TCP",
+    "dst_port": 86,
+    "flags": "S",
+    "payload_pattern": "pattern66",
+    "description": "Generated Rule Pattern 66"
+  },
+  {
+    "id": 67,
+    "protocol": "TCP",
+    "dst_port": 87,
+    "flags": "PA",
+    "payload_pattern": "pattern67",
+    "description": "Generated Rule Pattern 67"
+  },
+  {
+    "id": 68,
+    "protocol": "TCP",
+    "dst_port": 88,
+    "flags": "S",
+    "payload_pattern": "pattern68",
+    "description": "Generated Rule Pattern 68"
+  },
+  {
+    "id": 69,
+    "protocol": "TCP",
+    "dst_port": 89,
+    "flags": "PA",
+    "payload_pattern": "pattern69",
+    "description": "Generated Rule Pattern 69"
+  },
+  {
+    "id": 70,
+    "protocol": "TCP",
+    "dst_port": 80,
+    "flags": "S",
+    "payload_pattern": "pattern70",
+    "description": "Generated Rule Pattern 70"
+  },
+  {
+    "id": 71,
+    "protocol": "TCP",
+    "dst_port": 81,
+    "flags": "PA",
+    "payload_pattern": "pattern71",
+    "description": "Generated Rule Pattern 71"
+  },
+  {
+    "id": 72,
+    "protocol": "TCP",
+    "dst_port": 82,
+    "flags": "S",
+    "payload_pattern": "pattern72",
+    "description": "Generated Rule Pattern 72"
+  },
+  {
+    "id": 73,
+    "protocol": "TCP",
+    "dst_port": 83,
+    "flags": "PA",
+    "payload_pattern": "pattern73",
+    "description": "Generated Rule Pattern 73"
+  },
+  {
+    "id": 74,
+    "protocol": "TCP",
+    "dst_port": 84,
+    "flags": "S",
+    "payload_pattern": "pattern74",
+    "description": "Generated Rule Pattern 74"
+  },
+  {
+    "id": 75,
+    "protocol": "TCP",
+    "dst_port": 85,
+    "flags": "PA",
+    "payload_pattern": "pattern75",
+    "description": "Generated Rule Pattern 75"
+  },
+  {
+    "id": 76,
+    "protocol": "TCP",
+    "dst_port": 86,
+    "flags": "S",
+    "payload_pattern": "pattern76",
+    "description": "Generated Rule Pattern 76"
+  },
+  {
+    "id": 77,
+    "protocol": "TCP",
+    "dst_port": 87,
+    "flags": "PA",
+    "payload_pattern": "pattern77",
+    "description": "Generated Rule Pattern 77"
+  },
+  {
+    "id": 78,
+    "protocol": "TCP",
+    "dst_port": 88,
+    "flags": "S",
+    "payload_pattern": "pattern78",
+    "description": "Generated Rule Pattern 78"
+  },
+  {
+    "id": 79,
+    "protocol": "TCP",
+    "dst_port": 89,
+    "flags": "PA",
+    "payload_pattern": "pattern79",
+    "description": "Generated Rule Pattern 79"
+  },
+  {
+    "id": 80,
+    "protocol": "TCP",
+    "dst_port": 80,
+    "flags": "S",
+    "payload_pattern": "pattern80",
+    "description": "Generated Rule Pattern 80"
+  },
+  {
+    "id": 81,
+    "protocol": "TCP",
+    "dst_port": 81,
+    "flags": "PA",
+    "payload_pattern": "pattern81",
+    "description": "Generated Rule Pattern 81"
+  },
+  {
+    "id": 82,
+    "protocol": "TCP",
+    "dst_port": 82,
+    "flags": "S",
+    "payload_pattern": "pattern82",
+    "description": "Generated Rule Pattern 82"
+  },
+  {
+    "id": 83,
+    "protocol": "TCP",
+    "dst_port": 83,
+    "flags": "PA",
+    "payload_pattern": "pattern83",
+    "description": "Generated Rule Pattern 83"
+  },
+  {
+    "id": 84,
+    "protocol": "TCP",
+    "dst_port": 84,
+    "flags": "S",
+    "payload_pattern": "pattern84",
+    "description": "Generated Rule Pattern 84"
+  },
+  {
+    "id": 85,
+    "protocol": "TCP",
+    "dst_port": 85,
+    "flags": "PA",
+    "payload_pattern": "pattern85",
+    "description": "Generated Rule Pattern 85"
+  },
+  {
+    "id": 86,
+    "protocol": "TCP",
+    "dst_port": 86,
+    "flags": "S",
+    "payload_pattern": "pattern86",
+    "description": "Generated Rule Pattern 86"
+  },
+  {
+    "id": 87,
+    "protocol": "TCP",
+    "dst_port": 87,
+    "flags": "PA",
+    "payload_pattern": "pattern87",
+    "description": "Generated Rule Pattern 87"
+  },
+  {
+    "id": 88,
+    "protocol": "TCP",
+    "dst_port": 88,
+    "flags": "S",
+    "payload_pattern": "pattern88",
+    "description": "Generated Rule Pattern 88"
+  },
+  {
+    "id": 89,
+    "protocol": "TCP",
+    "dst_port": 89,
+    "flags": "PA",
+    "payload_pattern": "pattern89",
+    "description": "Generated Rule Pattern 89"
+  },
+  {
+    "id": 90,
+    "protocol": "TCP",
+    "dst_port": 80,
+    "flags": "S",
+    "payload_pattern": "pattern90",
+    "description": "Generated Rule Pattern 90"
+  },
+  {
+    "id": 91,
+    "protocol": "TCP",
+    "dst_port": 81,
+    "flags": "PA",
+    "payload_pattern": "pattern91",
+    "description": "Generated Rule Pattern 91"
+  },
+  {
+    "id": 92,
+    "protocol": "TCP",
+    "dst_port": 82,
+    "flags": "S",
+    "payload_pattern": "pattern92",
+    "description": "Generated Rule Pattern 92"
+  },
+  {
+    "id": 93,
+    "protocol": "TCP",
+    "dst_port": 83,
+    "flags": "PA",
+    "payload_pattern": "pattern93",
+    "description": "Generated Rule Pattern 93"
+  },
+  {
+    "id": 94,
+    "protocol": "TCP",
+    "dst_port": 84,
+    "flags": "S",
+    "payload_pattern": "pattern94",
+    "description": "Generated Rule Pattern 94"
+  },
+  {
+    "id": 95,
+    "protocol": "TCP",
+    "dst_port": 85,
+    "flags": "PA",
+    "payload_pattern": "pattern95",
+    "description": "Generated Rule Pattern 95"
+  },
+  {
+    "id": 96,
+    "protocol": "TCP",
+    "dst_port": 86,
+    "flags": "S",
+    "payload_pattern": "pattern96",
+    "description": "Generated Rule Pattern 96"
+  },
+  {
+    "id": 97,
+    "protocol": "TCP",
+    "dst_port": 87,
+    "flags": "PA",
+    "payload_pattern": "pattern97",
+    "description": "Generated Rule Pattern 97"
+  },
+  {
+    "id": 98,
+    "protocol": "TCP",
+    "dst_port": 88,
+    "flags": "S",
+    "payload_pattern": "pattern98",
+    "description": "Generated Rule Pattern 98"
+  },
+  {
+    "id": 99,
+    "protocol": "TCP",
+    "dst_port": 89,
+    "flags": "PA",
+    "payload_pattern": "pattern99",
+    "description": "Generated Rule Pattern 99"
+  },
+  {
+    "id": 100,
+    "protocol": "TCP",
+    "dst_port": 80,
+    "flags": "S",
+    "payload_pattern": "pattern100",
+    "description": "Generated Rule Pattern 100"
+  }
+]
