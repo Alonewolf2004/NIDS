@@ -1,802 +1,1528 @@
 [
   {
     "id": 1,
+    "category": "EVASION",
     "protocol": "TCP",
-    "dst_port": 81,
-    "flags": "PA",
-    "payload_pattern": "pattern1",
-    "description": "Generated Rule Pattern 1"
+    "dst_port": [
+      80,
+      8080,
+      23,
+      3306
+    ],
+    "payload_pattern": "%2e%2e%2f",
+    "description": "Evasion detection rule #1",
+    "severity": "MEDIUM",
+    "confidence": 0.97,
+    "reference": "T1070",
+    "response": "ALERT"
   },
   {
     "id": 2,
+    "category": "CUSTOM_TEST",
     "protocol": "TCP",
-    "dst_port": 82,
-    "flags": "S",
-    "payload_pattern": "pattern2",
-    "description": "Generated Rule Pattern 2"
+    "dst_port": [
+      110
+    ],
+    "payload_pattern": "pattern_custom",
+    "description": "Custom Test detection rule #2",
+    "severity": "LOW",
+    "confidence": 0.84,
+    "reference": "CUSTOM",
+    "response": "LOG"
   },
   {
     "id": 3,
+    "category": "COMMAND_INJECTION",
     "protocol": "TCP",
-    "dst_port": 83,
-    "flags": "PA",
-    "payload_pattern": "pattern3",
-    "description": "Generated Rule Pattern 3"
+    "dst_port": [
+      12345
+    ],
+    "payload_pattern": "cmd.exe",
+    "description": "Command Injection detection rule #3",
+    "severity": "CRITICAL",
+    "confidence": 0.89,
+    "reference": "CWE-78",
+    "response": "BLOCK_IP"
   },
   {
     "id": 4,
+    "category": "MALWARE_C2",
     "protocol": "TCP",
-    "dst_port": 84,
-    "flags": "S",
-    "payload_pattern": "pattern4",
-    "description": "Generated Rule Pattern 4"
+    "dst_port": [
+      110,
+      143,
+      25
+    ],
+    "payload_pattern": "bot_id=",
+    "description": "Malware C2 detection rule #4",
+    "severity": "CRITICAL",
+    "confidence": 0.84,
+    "reference": "T1071",
+    "response": "BLOCK_IP"
   },
   {
     "id": 5,
+    "category": "DATA_EXFILTRATION",
     "protocol": "TCP",
-    "dst_port": 85,
-    "flags": "PA",
-    "payload_pattern": "pattern5",
-    "description": "Generated Rule Pattern 5"
+    "dst_port": [
+      22,
+      25,
+      12345,
+      23
+    ],
+    "payload_pattern": "SELECT * FROM users",
+    "description": "Data Exfiltration detection rule #5",
+    "severity": "HIGH",
+    "confidence": 0.87,
+    "reference": "T1041",
+    "response": "BLOCK"
   },
   {
     "id": 6,
+    "category": "BUFFER_OVERFLOW",
     "protocol": "TCP",
-    "dst_port": 86,
-    "flags": "S",
-    "payload_pattern": "pattern6",
-    "description": "Generated Rule Pattern 6"
+    "dst_port": [
+      8080,
+      143,
+      21,
+      25
+    ],
+    "payload_pattern": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "description": "Buffer Overflow detection rule #6",
+    "severity": "HIGH",
+    "confidence": 0.98,
+    "reference": "CWE-120",
+    "response": "BLOCK"
   },
   {
     "id": 7,
+    "category": "MALWARE_C2",
     "protocol": "TCP",
-    "dst_port": 87,
-    "flags": "PA",
-    "payload_pattern": "pattern7",
-    "description": "Generated Rule Pattern 7"
+    "dst_port": [
+      3389,
+      636
+    ],
+    "payload_pattern": "bot_id=",
+    "description": "Malware C2 detection rule #7",
+    "severity": "CRITICAL",
+    "confidence": 0.92,
+    "reference": "T1071",
+    "response": "BLOCK_IP"
   },
   {
     "id": 8,
+    "category": "MALWARE_C2",
     "protocol": "TCP",
-    "dst_port": 88,
-    "flags": "S",
-    "payload_pattern": "pattern8",
-    "description": "Generated Rule Pattern 8"
+    "dst_port": [
+      636
+    ],
+    "payload_pattern": "bot_id=",
+    "description": "Malware C2 detection rule #8",
+    "severity": "CRITICAL",
+    "confidence": 0.74,
+    "reference": "T1071",
+    "response": "BLOCK_IP"
   },
   {
     "id": 9,
+    "category": "MALWARE_C2",
     "protocol": "TCP",
-    "dst_port": 89,
-    "flags": "PA",
-    "payload_pattern": "pattern9",
-    "description": "Generated Rule Pattern 9"
+    "dst_port": [
+      3306,
+      389
+    ],
+    "payload_pattern": "bot_id=",
+    "description": "Malware C2 detection rule #9",
+    "severity": "CRITICAL",
+    "confidence": 0.76,
+    "reference": "T1071",
+    "response": "BLOCK_IP"
   },
   {
     "id": 10,
+    "category": "RECONNAISSANCE",
     "protocol": "TCP",
-    "dst_port": 80,
-    "flags": "S",
-    "payload_pattern": "pattern10",
-    "description": "Generated Rule Pattern 10"
+    "dst_port": [
+      8080,
+      25,
+      636
+    ],
+    "payload_pattern": "nmap",
+    "description": "Reconnaissance detection rule #10",
+    "severity": "LOW",
+    "confidence": 0.89,
+    "reference": "T1046",
+    "response": "LOG"
   },
   {
     "id": 11,
+    "category": "PATH_TRAVERSAL",
     "protocol": "TCP",
-    "dst_port": 81,
-    "flags": "PA",
-    "payload_pattern": "pattern11",
-    "description": "Generated Rule Pattern 11"
+    "dst_port": [
+      80
+    ],
+    "payload_pattern": "../../../",
+    "description": "Path Traversal detection rule #11",
+    "severity": "HIGH",
+    "confidence": 0.77,
+    "reference": "CWE-22",
+    "response": "BLOCK"
   },
   {
     "id": 12,
+    "category": "EVASION",
     "protocol": "TCP",
-    "dst_port": 82,
-    "flags": "S",
-    "payload_pattern": "pattern12",
-    "description": "Generated Rule Pattern 12"
+    "dst_port": [
+      443,
+      143,
+      636,
+      3306
+    ],
+    "payload_pattern": "%2e%2e%2f",
+    "description": "Evasion detection rule #12",
+    "severity": "MEDIUM",
+    "confidence": 0.82,
+    "reference": "T1070",
+    "response": "ALERT"
   },
   {
     "id": 13,
+    "category": "XML_INJECTION",
     "protocol": "TCP",
-    "dst_port": 83,
-    "flags": "PA",
-    "payload_pattern": "pattern13",
-    "description": "Generated Rule Pattern 13"
+    "dst_port": [
+      80,
+      389,
+      25
+    ],
+    "payload_pattern": "<!ENTITY",
+    "description": "Xml Injection detection rule #13",
+    "severity": "HIGH",
+    "confidence": 0.76,
+    "reference": "CWE-611",
+    "response": "BLOCK"
   },
   {
     "id": 14,
+    "category": "EVASION",
     "protocol": "TCP",
-    "dst_port": 84,
-    "flags": "S",
-    "payload_pattern": "pattern14",
-    "description": "Generated Rule Pattern 14"
+    "dst_port": [
+      3306,
+      25
+    ],
+    "payload_pattern": "%2e%2e%2f",
+    "description": "Evasion detection rule #14",
+    "severity": "MEDIUM",
+    "confidence": 0.87,
+    "reference": "T1070",
+    "response": "ALERT"
   },
   {
     "id": 15,
+    "category": "CUSTOM_TEST",
     "protocol": "TCP",
-    "dst_port": 85,
-    "flags": "PA",
-    "payload_pattern": "pattern15",
-    "description": "Generated Rule Pattern 15"
+    "dst_port": [
+      21
+    ],
+    "payload_pattern": "pattern_custom",
+    "description": "Custom Test detection rule #15",
+    "severity": "LOW",
+    "confidence": 0.92,
+    "reference": "CUSTOM",
+    "response": "LOG"
   },
   {
     "id": 16,
+    "category": "CUSTOM_TEST",
     "protocol": "TCP",
-    "dst_port": 86,
-    "flags": "S",
-    "payload_pattern": "pattern16",
-    "description": "Generated Rule Pattern 16"
+    "dst_port": [
+      3306
+    ],
+    "payload_pattern": "pattern_custom",
+    "description": "Custom Test detection rule #16",
+    "severity": "LOW",
+    "confidence": 0.81,
+    "reference": "CUSTOM",
+    "response": "LOG"
   },
   {
     "id": 17,
+    "category": "COMMAND_INJECTION",
     "protocol": "TCP",
-    "dst_port": 87,
-    "flags": "PA",
-    "payload_pattern": "pattern17",
-    "description": "Generated Rule Pattern 17"
+    "dst_port": [
+      110,
+      3306
+    ],
+    "payload_pattern": "cmd.exe",
+    "description": "Command Injection detection rule #17",
+    "severity": "CRITICAL",
+    "confidence": 0.96,
+    "reference": "CWE-78",
+    "response": "BLOCK_IP"
   },
   {
     "id": 18,
+    "category": "COMMAND_INJECTION",
     "protocol": "TCP",
-    "dst_port": 88,
-    "flags": "S",
-    "payload_pattern": "pattern18",
-    "description": "Generated Rule Pattern 18"
+    "dst_port": [
+      3389,
+      389,
+      12345,
+      25
+    ],
+    "payload_pattern": "cmd.exe",
+    "description": "Command Injection detection rule #18",
+    "severity": "CRITICAL",
+    "confidence": 0.76,
+    "reference": "CWE-78",
+    "response": "BLOCK_IP"
   },
   {
     "id": 19,
+    "category": "MALWARE_C2",
     "protocol": "TCP",
-    "dst_port": 89,
-    "flags": "PA",
-    "payload_pattern": "pattern19",
-    "description": "Generated Rule Pattern 19"
+    "dst_port": [
+      12345
+    ],
+    "payload_pattern": "bot_id=",
+    "description": "Malware C2 detection rule #19",
+    "severity": "CRITICAL",
+    "confidence": 0.85,
+    "reference": "T1071",
+    "response": "BLOCK_IP"
   },
   {
     "id": 20,
+    "category": "DATA_EXFILTRATION",
     "protocol": "TCP",
-    "dst_port": 80,
-    "flags": "S",
-    "payload_pattern": "pattern20",
-    "description": "Generated Rule Pattern 20"
+    "dst_port": [
+      3306
+    ],
+    "payload_pattern": "SELECT * FROM users",
+    "description": "Data Exfiltration detection rule #20",
+    "severity": "HIGH",
+    "confidence": 0.94,
+    "reference": "T1041",
+    "response": "BLOCK"
   },
   {
     "id": 21,
+    "category": "CUSTOM_TEST",
     "protocol": "TCP",
-    "dst_port": 81,
-    "flags": "PA",
-    "payload_pattern": "pattern21",
-    "description": "Generated Rule Pattern 21"
+    "dst_port": [
+      110
+    ],
+    "payload_pattern": "pattern_custom",
+    "description": "Custom Test detection rule #21",
+    "severity": "LOW",
+    "confidence": 0.82,
+    "reference": "CUSTOM",
+    "response": "LOG"
   },
   {
     "id": 22,
+    "category": "WEB_SHELL",
     "protocol": "TCP",
-    "dst_port": 82,
-    "flags": "S",
-    "payload_pattern": "pattern22",
-    "description": "Generated Rule Pattern 22"
+    "dst_port": [
+      3306,
+      8080,
+      21,
+      143
+    ],
+    "payload_pattern": "<?php system(",
+    "description": "Web Shell detection rule #22",
+    "severity": "CRITICAL",
+    "confidence": 0.98,
+    "reference": "T1505.003",
+    "response": "BLOCK_IP"
   },
   {
     "id": 23,
+    "category": "BUFFER_OVERFLOW",
     "protocol": "TCP",
-    "dst_port": 83,
-    "flags": "PA",
-    "payload_pattern": "pattern23",
-    "description": "Generated Rule Pattern 23"
+    "dst_port": [
+      143
+    ],
+    "payload_pattern": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "description": "Buffer Overflow detection rule #23",
+    "severity": "HIGH",
+    "confidence": 0.73,
+    "reference": "CWE-120",
+    "response": "BLOCK"
   },
   {
     "id": 24,
+    "category": "COMMAND_INJECTION",
     "protocol": "TCP",
-    "dst_port": 84,
-    "flags": "S",
-    "payload_pattern": "pattern24",
-    "description": "Generated Rule Pattern 24"
+    "dst_port": [
+      389,
+      8080
+    ],
+    "payload_pattern": "cmd.exe",
+    "description": "Command Injection detection rule #24",
+    "severity": "CRITICAL",
+    "confidence": 0.75,
+    "reference": "CWE-78",
+    "response": "BLOCK_IP"
   },
   {
     "id": 25,
+    "category": "BUFFER_OVERFLOW",
     "protocol": "TCP",
-    "dst_port": 85,
-    "flags": "PA",
-    "payload_pattern": "pattern25",
-    "description": "Generated Rule Pattern 25"
+    "dst_port": [
+      23,
+      8080,
+      3389,
+      443
+    ],
+    "payload_pattern": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "description": "Buffer Overflow detection rule #25",
+    "severity": "HIGH",
+    "confidence": 0.84,
+    "reference": "CWE-120",
+    "response": "BLOCK"
   },
   {
     "id": 26,
+    "category": "PROTOCOL_ANOMALY",
     "protocol": "TCP",
-    "dst_port": 86,
-    "flags": "S",
-    "payload_pattern": "pattern26",
-    "description": "Generated Rule Pattern 26"
+    "dst_port": [
+      143,
+      12345
+    ],
+    "payload_pattern": "HTTP/1.1\r\n\r\nGET",
+    "description": "Protocol Anomaly detection rule #26",
+    "severity": "HIGH",
+    "confidence": 0.8,
+    "reference": "CWE-444",
+    "response": "BLOCK"
   },
   {
     "id": 27,
+    "category": "XML_INJECTION",
     "protocol": "TCP",
-    "dst_port": 87,
-    "flags": "PA",
-    "payload_pattern": "pattern27",
-    "description": "Generated Rule Pattern 27"
+    "dst_port": [
+      22,
+      636
+    ],
+    "payload_pattern": "<!ENTITY",
+    "description": "Xml Injection detection rule #27",
+    "severity": "HIGH",
+    "confidence": 0.98,
+    "reference": "CWE-611",
+    "response": "BLOCK"
   },
   {
     "id": 28,
+    "category": "LDAP_INJECTION",
     "protocol": "TCP",
-    "dst_port": 88,
-    "flags": "S",
-    "payload_pattern": "pattern28",
-    "description": "Generated Rule Pattern 28"
+    "dst_port": [
+      3306
+    ],
+    "payload_pattern": "*)(uid=*",
+    "description": "Ldap Injection detection rule #28",
+    "severity": "HIGH",
+    "confidence": 0.98,
+    "reference": "CWE-90",
+    "response": "BLOCK"
   },
   {
     "id": 29,
+    "category": "BUFFER_OVERFLOW",
     "protocol": "TCP",
-    "dst_port": 89,
-    "flags": "PA",
-    "payload_pattern": "pattern29",
-    "description": "Generated Rule Pattern 29"
+    "dst_port": [
+      23
+    ],
+    "payload_pattern": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "description": "Buffer Overflow detection rule #29",
+    "severity": "HIGH",
+    "confidence": 0.9,
+    "reference": "CWE-120",
+    "response": "BLOCK"
   },
   {
     "id": 30,
+    "category": "PROTOCOL_ANOMALY",
     "protocol": "TCP",
-    "dst_port": 80,
-    "flags": "S",
-    "payload_pattern": "pattern30",
-    "description": "Generated Rule Pattern 30"
+    "dst_port": [
+      12345,
+      23,
+      143
+    ],
+    "payload_pattern": "HTTP/1.1\r\n\r\nGET",
+    "description": "Protocol Anomaly detection rule #30",
+    "severity": "HIGH",
+    "confidence": 0.79,
+    "reference": "CWE-444",
+    "response": "BLOCK"
   },
   {
     "id": 31,
+    "category": "XML_INJECTION",
     "protocol": "TCP",
-    "dst_port": 81,
-    "flags": "PA",
-    "payload_pattern": "pattern31",
-    "description": "Generated Rule Pattern 31"
+    "dst_port": [
+      23,
+      636,
+      25
+    ],
+    "payload_pattern": "<!ENTITY",
+    "description": "Xml Injection detection rule #31",
+    "severity": "HIGH",
+    "confidence": 0.95,
+    "reference": "CWE-611",
+    "response": "BLOCK"
   },
   {
     "id": 32,
+    "category": "XML_INJECTION",
     "protocol": "TCP",
-    "dst_port": 82,
-    "flags": "S",
-    "payload_pattern": "pattern32",
-    "description": "Generated Rule Pattern 32"
+    "dst_port": [
+      25
+    ],
+    "payload_pattern": "<!ENTITY",
+    "description": "Xml Injection detection rule #32",
+    "severity": "HIGH",
+    "confidence": 0.75,
+    "reference": "CWE-611",
+    "response": "BLOCK"
   },
   {
     "id": 33,
+    "category": "CUSTOM_TEST",
     "protocol": "TCP",
-    "dst_port": 83,
-    "flags": "PA",
-    "payload_pattern": "pattern33",
-    "description": "Generated Rule Pattern 33"
+    "dst_port": [
+      22,
+      389,
+      23,
+      8080
+    ],
+    "payload_pattern": "pattern_custom",
+    "description": "Custom Test detection rule #33",
+    "severity": "LOW",
+    "confidence": 0.74,
+    "reference": "CUSTOM",
+    "response": "LOG"
   },
   {
     "id": 34,
+    "category": "PATH_TRAVERSAL",
     "protocol": "TCP",
-    "dst_port": 84,
-    "flags": "S",
-    "payload_pattern": "pattern34",
-    "description": "Generated Rule Pattern 34"
+    "dst_port": [
+      443,
+      80,
+      389,
+      3389
+    ],
+    "payload_pattern": "../../../",
+    "description": "Path Traversal detection rule #34",
+    "severity": "HIGH",
+    "confidence": 0.8,
+    "reference": "CWE-22",
+    "response": "BLOCK"
   },
   {
     "id": 35,
+    "category": "MALWARE_C2",
     "protocol": "TCP",
-    "dst_port": 85,
-    "flags": "PA",
-    "payload_pattern": "pattern35",
-    "description": "Generated Rule Pattern 35"
+    "dst_port": [
+      636
+    ],
+    "payload_pattern": "bot_id=",
+    "description": "Malware C2 detection rule #35",
+    "severity": "CRITICAL",
+    "confidence": 0.94,
+    "reference": "T1071",
+    "response": "BLOCK_IP"
   },
   {
     "id": 36,
+    "category": "COMMAND_INJECTION",
     "protocol": "TCP",
-    "dst_port": 86,
-    "flags": "S",
-    "payload_pattern": "pattern36",
-    "description": "Generated Rule Pattern 36"
+    "dst_port": [
+      25,
+      110,
+      23
+    ],
+    "payload_pattern": "cmd.exe",
+    "description": "Command Injection detection rule #36",
+    "severity": "CRITICAL",
+    "confidence": 0.88,
+    "reference": "CWE-78",
+    "response": "BLOCK_IP"
   },
   {
     "id": 37,
+    "category": "WEB_SHELL",
     "protocol": "TCP",
-    "dst_port": 87,
-    "flags": "PA",
-    "payload_pattern": "pattern37",
-    "description": "Generated Rule Pattern 37"
+    "dst_port": [
+      636
+    ],
+    "payload_pattern": "<?php system(",
+    "description": "Web Shell detection rule #37",
+    "severity": "CRITICAL",
+    "confidence": 0.86,
+    "reference": "T1505.003",
+    "response": "BLOCK_IP"
   },
   {
     "id": 38,
+    "category": "BUFFER_OVERFLOW",
     "protocol": "TCP",
-    "dst_port": 88,
-    "flags": "S",
-    "payload_pattern": "pattern38",
-    "description": "Generated Rule Pattern 38"
+    "dst_port": [
+      23
+    ],
+    "payload_pattern": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "description": "Buffer Overflow detection rule #38",
+    "severity": "HIGH",
+    "confidence": 0.88,
+    "reference": "CWE-120",
+    "response": "BLOCK"
   },
   {
     "id": 39,
+    "category": "XML_INJECTION",
     "protocol": "TCP",
-    "dst_port": 89,
-    "flags": "PA",
-    "payload_pattern": "pattern39",
-    "description": "Generated Rule Pattern 39"
+    "dst_port": [
+      110,
+      3306
+    ],
+    "payload_pattern": "<!ENTITY",
+    "description": "Xml Injection detection rule #39",
+    "severity": "HIGH",
+    "confidence": 0.76,
+    "reference": "CWE-611",
+    "response": "BLOCK"
   },
   {
     "id": 40,
+    "category": "XSS",
     "protocol": "TCP",
-    "dst_port": 80,
-    "flags": "S",
-    "payload_pattern": "pattern40",
-    "description": "Generated Rule Pattern 40"
+    "dst_port": [
+      22,
+      3389,
+      23
+    ],
+    "payload_pattern": "<script>",
+    "description": "Xss detection rule #40",
+    "severity": "MEDIUM",
+    "confidence": 0.87,
+    "reference": "CWE-79",
+    "response": "ALERT"
   },
   {
     "id": 41,
+    "category": "SQL_INJECTION",
     "protocol": "TCP",
-    "dst_port": 81,
-    "flags": "PA",
-    "payload_pattern": "pattern41",
-    "description": "Generated Rule Pattern 41"
+    "dst_port": [
+      143,
+      80
+    ],
+    "payload_pattern": "' OR '1'='1",
+    "description": "Sql Injection detection rule #41",
+    "severity": "HIGH",
+    "confidence": 0.93,
+    "reference": "CWE-89",
+    "response": "BLOCK"
   },
   {
     "id": 42,
+    "category": "CUSTOM_TEST",
     "protocol": "TCP",
-    "dst_port": 82,
-    "flags": "S",
-    "payload_pattern": "pattern42",
-    "description": "Generated Rule Pattern 42"
+    "dst_port": [
+      23,
+      12345,
+      110
+    ],
+    "payload_pattern": "pattern_custom",
+    "description": "Custom Test detection rule #42",
+    "severity": "LOW",
+    "confidence": 0.96,
+    "reference": "CUSTOM",
+    "response": "LOG"
   },
   {
     "id": 43,
+    "category": "WEB_SHELL",
     "protocol": "TCP",
-    "dst_port": 83,
-    "flags": "PA",
-    "payload_pattern": "pattern43",
-    "description": "Generated Rule Pattern 43"
+    "dst_port": [
+      3389,
+      25
+    ],
+    "payload_pattern": "<?php system(",
+    "description": "Web Shell detection rule #43",
+    "severity": "CRITICAL",
+    "confidence": 0.74,
+    "reference": "T1505.003",
+    "response": "BLOCK_IP"
   },
   {
     "id": 44,
+    "category": "XML_INJECTION",
     "protocol": "TCP",
-    "dst_port": 84,
-    "flags": "S",
-    "payload_pattern": "pattern44",
-    "description": "Generated Rule Pattern 44"
+    "dst_port": [
+      21,
+      8080,
+      443
+    ],
+    "payload_pattern": "<!ENTITY",
+    "description": "Xml Injection detection rule #44",
+    "severity": "HIGH",
+    "confidence": 0.8,
+    "reference": "CWE-611",
+    "response": "BLOCK"
   },
   {
     "id": 45,
+    "category": "XML_INJECTION",
     "protocol": "TCP",
-    "dst_port": 85,
-    "flags": "PA",
-    "payload_pattern": "pattern45",
-    "description": "Generated Rule Pattern 45"
+    "dst_port": [
+      22,
+      80
+    ],
+    "payload_pattern": "<!ENTITY",
+    "description": "Xml Injection detection rule #45",
+    "severity": "HIGH",
+    "confidence": 0.77,
+    "reference": "CWE-611",
+    "response": "BLOCK"
   },
   {
     "id": 46,
+    "category": "DATA_EXFILTRATION",
     "protocol": "TCP",
-    "dst_port": 86,
-    "flags": "S",
-    "payload_pattern": "pattern46",
-    "description": "Generated Rule Pattern 46"
+    "dst_port": [
+      12345
+    ],
+    "payload_pattern": "SELECT * FROM users",
+    "description": "Data Exfiltration detection rule #46",
+    "severity": "HIGH",
+    "confidence": 0.74,
+    "reference": "T1041",
+    "response": "BLOCK"
   },
   {
     "id": 47,
+    "category": "LDAP_INJECTION",
     "protocol": "TCP",
-    "dst_port": 87,
-    "flags": "PA",
-    "payload_pattern": "pattern47",
-    "description": "Generated Rule Pattern 47"
+    "dst_port": [
+      3389,
+      80,
+      22,
+      12345
+    ],
+    "payload_pattern": "*)(uid=*",
+    "description": "Ldap Injection detection rule #47",
+    "severity": "HIGH",
+    "confidence": 0.77,
+    "reference": "CWE-90",
+    "response": "BLOCK"
   },
   {
     "id": 48,
+    "category": "DATA_EXFILTRATION",
     "protocol": "TCP",
-    "dst_port": 88,
-    "flags": "S",
-    "payload_pattern": "pattern48",
-    "description": "Generated Rule Pattern 48"
+    "dst_port": [
+      22,
+      3306,
+      110
+    ],
+    "payload_pattern": "SELECT * FROM users",
+    "description": "Data Exfiltration detection rule #48",
+    "severity": "HIGH",
+    "confidence": 0.78,
+    "reference": "T1041",
+    "response": "BLOCK"
   },
   {
     "id": 49,
+    "category": "XML_INJECTION",
     "protocol": "TCP",
-    "dst_port": 89,
-    "flags": "PA",
-    "payload_pattern": "pattern49",
-    "description": "Generated Rule Pattern 49"
+    "dst_port": [
+      3306,
+      80,
+      25,
+      443
+    ],
+    "payload_pattern": "<!ENTITY",
+    "description": "Xml Injection detection rule #49",
+    "severity": "HIGH",
+    "confidence": 0.95,
+    "reference": "CWE-611",
+    "response": "BLOCK"
   },
   {
     "id": 50,
+    "category": "PATH_TRAVERSAL",
     "protocol": "TCP",
-    "dst_port": 80,
-    "flags": "S",
-    "payload_pattern": "pattern50",
-    "description": "Generated Rule Pattern 50"
+    "dst_port": [
+      23,
+      21,
+      22
+    ],
+    "payload_pattern": "../../../",
+    "description": "Path Traversal detection rule #50",
+    "severity": "HIGH",
+    "confidence": 0.88,
+    "reference": "CWE-22",
+    "response": "BLOCK"
   },
   {
     "id": 51,
+    "category": "XML_INJECTION",
     "protocol": "TCP",
-    "dst_port": 81,
-    "flags": "PA",
-    "payload_pattern": "pattern51",
-    "description": "Generated Rule Pattern 51"
+    "dst_port": [
+      23
+    ],
+    "payload_pattern": "<!ENTITY",
+    "description": "Xml Injection detection rule #51",
+    "severity": "HIGH",
+    "confidence": 0.81,
+    "reference": "CWE-611",
+    "response": "BLOCK"
   },
   {
     "id": 52,
+    "category": "WEB_SHELL",
     "protocol": "TCP",
-    "dst_port": 82,
-    "flags": "S",
-    "payload_pattern": "pattern52",
-    "description": "Generated Rule Pattern 52"
+    "dst_port": [
+      21
+    ],
+    "payload_pattern": "<?php system(",
+    "description": "Web Shell detection rule #52",
+    "severity": "CRITICAL",
+    "confidence": 0.79,
+    "reference": "T1505.003",
+    "response": "BLOCK_IP"
   },
   {
     "id": 53,
+    "category": "CUSTOM_TEST",
     "protocol": "TCP",
-    "dst_port": 83,
-    "flags": "PA",
-    "payload_pattern": "pattern53",
-    "description": "Generated Rule Pattern 53"
+    "dst_port": [
+      443
+    ],
+    "payload_pattern": "pattern_custom",
+    "description": "Custom Test detection rule #53",
+    "severity": "LOW",
+    "confidence": 0.71,
+    "reference": "CUSTOM",
+    "response": "LOG"
   },
   {
     "id": 54,
+    "category": "PROTOCOL_ANOMALY",
     "protocol": "TCP",
-    "dst_port": 84,
-    "flags": "S",
-    "payload_pattern": "pattern54",
-    "description": "Generated Rule Pattern 54"
+    "dst_port": [
+      22,
+      110,
+      443,
+      80
+    ],
+    "payload_pattern": "HTTP/1.1\r\n\r\nGET",
+    "description": "Protocol Anomaly detection rule #54",
+    "severity": "HIGH",
+    "confidence": 0.88,
+    "reference": "CWE-444",
+    "response": "BLOCK"
   },
   {
     "id": 55,
+    "category": "XSS",
     "protocol": "TCP",
-    "dst_port": 85,
-    "flags": "PA",
-    "payload_pattern": "pattern55",
-    "description": "Generated Rule Pattern 55"
+    "dst_port": [
+      3306,
+      23
+    ],
+    "payload_pattern": "<script>",
+    "description": "Xss detection rule #55",
+    "severity": "MEDIUM",
+    "confidence": 0.71,
+    "reference": "CWE-79",
+    "response": "ALERT"
   },
   {
     "id": 56,
+    "category": "COMMAND_INJECTION",
     "protocol": "TCP",
-    "dst_port": 86,
-    "flags": "S",
-    "payload_pattern": "pattern56",
-    "description": "Generated Rule Pattern 56"
+    "dst_port": [
+      143,
+      3306,
+      23,
+      443
+    ],
+    "payload_pattern": "cmd.exe",
+    "description": "Command Injection detection rule #56",
+    "severity": "CRITICAL",
+    "confidence": 0.95,
+    "reference": "CWE-78",
+    "response": "BLOCK_IP"
   },
   {
     "id": 57,
+    "category": "DATA_EXFILTRATION",
     "protocol": "TCP",
-    "dst_port": 87,
-    "flags": "PA",
-    "payload_pattern": "pattern57",
-    "description": "Generated Rule Pattern 57"
+    "dst_port": [
+      143,
+      3306,
+      3389
+    ],
+    "payload_pattern": "SELECT * FROM users",
+    "description": "Data Exfiltration detection rule #57",
+    "severity": "HIGH",
+    "confidence": 0.77,
+    "reference": "T1041",
+    "response": "BLOCK"
   },
   {
     "id": 58,
+    "category": "PROTOCOL_ANOMALY",
     "protocol": "TCP",
-    "dst_port": 88,
-    "flags": "S",
-    "payload_pattern": "pattern58",
-    "description": "Generated Rule Pattern 58"
+    "dst_port": [
+      443,
+      389
+    ],
+    "payload_pattern": "HTTP/1.1\r\n\r\nGET",
+    "description": "Protocol Anomaly detection rule #58",
+    "severity": "HIGH",
+    "confidence": 0.8,
+    "reference": "CWE-444",
+    "response": "BLOCK"
   },
   {
     "id": 59,
+    "category": "CUSTOM_TEST",
     "protocol": "TCP",
-    "dst_port": 89,
-    "flags": "PA",
-    "payload_pattern": "pattern59",
-    "description": "Generated Rule Pattern 59"
+    "dst_port": [
+      21,
+      12345,
+      389
+    ],
+    "payload_pattern": "pattern_custom",
+    "description": "Custom Test detection rule #59",
+    "severity": "LOW",
+    "confidence": 0.95,
+    "reference": "CUSTOM",
+    "response": "LOG"
   },
   {
     "id": 60,
+    "category": "PATH_TRAVERSAL",
     "protocol": "TCP",
-    "dst_port": 80,
-    "flags": "S",
-    "payload_pattern": "pattern60",
-    "description": "Generated Rule Pattern 60"
+    "dst_port": [
+      143,
+      636
+    ],
+    "payload_pattern": "../../../",
+    "description": "Path Traversal detection rule #60",
+    "severity": "HIGH",
+    "confidence": 0.79,
+    "reference": "CWE-22",
+    "response": "BLOCK"
   },
   {
     "id": 61,
+    "category": "BUFFER_OVERFLOW",
     "protocol": "TCP",
-    "dst_port": 81,
-    "flags": "PA",
-    "payload_pattern": "pattern61",
-    "description": "Generated Rule Pattern 61"
+    "dst_port": [
+      12345,
+      3306
+    ],
+    "payload_pattern": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "description": "Buffer Overflow detection rule #61",
+    "severity": "HIGH",
+    "confidence": 0.86,
+    "reference": "CWE-120",
+    "response": "BLOCK"
   },
   {
     "id": 62,
+    "category": "PROTOCOL_ANOMALY",
     "protocol": "TCP",
-    "dst_port": 82,
-    "flags": "S",
-    "payload_pattern": "pattern62",
-    "description": "Generated Rule Pattern 62"
+    "dst_port": [
+      3389,
+      80,
+      443
+    ],
+    "payload_pattern": "HTTP/1.1\r\n\r\nGET",
+    "description": "Protocol Anomaly detection rule #62",
+    "severity": "HIGH",
+    "confidence": 0.87,
+    "reference": "CWE-444",
+    "response": "BLOCK"
   },
   {
     "id": 63,
+    "category": "PATH_TRAVERSAL",
     "protocol": "TCP",
-    "dst_port": 83,
-    "flags": "PA",
-    "payload_pattern": "pattern63",
-    "description": "Generated Rule Pattern 63"
+    "dst_port": [
+      389
+    ],
+    "payload_pattern": "../../../",
+    "description": "Path Traversal detection rule #63",
+    "severity": "HIGH",
+    "confidence": 0.73,
+    "reference": "CWE-22",
+    "response": "BLOCK"
   },
   {
     "id": 64,
+    "category": "EVASION",
     "protocol": "TCP",
-    "dst_port": 84,
-    "flags": "S",
-    "payload_pattern": "pattern64",
-    "description": "Generated Rule Pattern 64"
+    "dst_port": [
+      389
+    ],
+    "payload_pattern": "%2e%2e%2f",
+    "description": "Evasion detection rule #64",
+    "severity": "MEDIUM",
+    "confidence": 0.96,
+    "reference": "T1070",
+    "response": "ALERT"
   },
   {
     "id": 65,
+    "category": "BUFFER_OVERFLOW",
     "protocol": "TCP",
-    "dst_port": 85,
-    "flags": "PA",
-    "payload_pattern": "pattern65",
-    "description": "Generated Rule Pattern 65"
+    "dst_port": [
+      21
+    ],
+    "payload_pattern": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "description": "Buffer Overflow detection rule #65",
+    "severity": "HIGH",
+    "confidence": 0.79,
+    "reference": "CWE-120",
+    "response": "BLOCK"
   },
   {
     "id": 66,
+    "category": "SQL_INJECTION",
     "protocol": "TCP",
-    "dst_port": 86,
-    "flags": "S",
-    "payload_pattern": "pattern66",
-    "description": "Generated Rule Pattern 66"
+    "dst_port": [
+      80
+    ],
+    "payload_pattern": "' OR '1'='1",
+    "description": "Sql Injection detection rule #66",
+    "severity": "HIGH",
+    "confidence": 0.79,
+    "reference": "CWE-89",
+    "response": "BLOCK"
   },
   {
     "id": 67,
+    "category": "SQL_INJECTION",
     "protocol": "TCP",
-    "dst_port": 87,
-    "flags": "PA",
-    "payload_pattern": "pattern67",
-    "description": "Generated Rule Pattern 67"
+    "dst_port": [
+      3306
+    ],
+    "payload_pattern": "' OR '1'='1",
+    "description": "Sql Injection detection rule #67",
+    "severity": "HIGH",
+    "confidence": 0.82,
+    "reference": "CWE-89",
+    "response": "BLOCK"
   },
   {
     "id": 68,
+    "category": "CUSTOM_TEST",
     "protocol": "TCP",
-    "dst_port": 88,
-    "flags": "S",
-    "payload_pattern": "pattern68",
-    "description": "Generated Rule Pattern 68"
+    "dst_port": [
+      110
+    ],
+    "payload_pattern": "pattern_custom",
+    "description": "Custom Test detection rule #68",
+    "severity": "LOW",
+    "confidence": 0.74,
+    "reference": "CUSTOM",
+    "response": "LOG"
   },
   {
     "id": 69,
+    "category": "EVASION",
     "protocol": "TCP",
-    "dst_port": 89,
-    "flags": "PA",
-    "payload_pattern": "pattern69",
-    "description": "Generated Rule Pattern 69"
+    "dst_port": [
+      3306
+    ],
+    "payload_pattern": "%2e%2e%2f",
+    "description": "Evasion detection rule #69",
+    "severity": "MEDIUM",
+    "confidence": 0.86,
+    "reference": "T1070",
+    "response": "ALERT"
   },
   {
     "id": 70,
+    "category": "BRUTE_FORCE",
     "protocol": "TCP",
-    "dst_port": 80,
-    "flags": "S",
-    "payload_pattern": "pattern70",
-    "description": "Generated Rule Pattern 70"
+    "dst_port": [
+      21,
+      8080
+    ],
+    "payload_pattern": "admin:admin",
+    "description": "Brute Force detection rule #70",
+    "severity": "MEDIUM",
+    "confidence": 0.72,
+    "reference": "T1110",
+    "response": "ALERT"
   },
   {
     "id": 71,
+    "category": "XSS",
     "protocol": "TCP",
-    "dst_port": 81,
-    "flags": "PA",
-    "payload_pattern": "pattern71",
-    "description": "Generated Rule Pattern 71"
+    "dst_port": [
+      12345,
+      443,
+      21,
+      8080
+    ],
+    "payload_pattern": "<script>",
+    "description": "Xss detection rule #71",
+    "severity": "MEDIUM",
+    "confidence": 0.97,
+    "reference": "CWE-79",
+    "response": "ALERT"
   },
   {
     "id": 72,
+    "category": "CUSTOM_TEST",
     "protocol": "TCP",
-    "dst_port": 82,
-    "flags": "S",
-    "payload_pattern": "pattern72",
-    "description": "Generated Rule Pattern 72"
+    "dst_port": [
+      8080
+    ],
+    "payload_pattern": "pattern_custom",
+    "description": "Custom Test detection rule #72",
+    "severity": "LOW",
+    "confidence": 0.7,
+    "reference": "CUSTOM",
+    "response": "LOG"
   },
   {
     "id": 73,
+    "category": "XML_INJECTION",
     "protocol": "TCP",
-    "dst_port": 83,
-    "flags": "PA",
-    "payload_pattern": "pattern73",
-    "description": "Generated Rule Pattern 73"
+    "dst_port": [
+      12345
+    ],
+    "payload_pattern": "<!ENTITY",
+    "description": "Xml Injection detection rule #73",
+    "severity": "HIGH",
+    "confidence": 0.79,
+    "reference": "CWE-611",
+    "response": "BLOCK"
   },
   {
     "id": 74,
+    "category": "LDAP_INJECTION",
     "protocol": "TCP",
-    "dst_port": 84,
-    "flags": "S",
-    "payload_pattern": "pattern74",
-    "description": "Generated Rule Pattern 74"
+    "dst_port": [
+      80,
+      110,
+      636
+    ],
+    "payload_pattern": "*)(uid=*",
+    "description": "Ldap Injection detection rule #74",
+    "severity": "HIGH",
+    "confidence": 0.73,
+    "reference": "CWE-90",
+    "response": "BLOCK"
   },
   {
     "id": 75,
+    "category": "EVASION",
     "protocol": "TCP",
-    "dst_port": 85,
-    "flags": "PA",
-    "payload_pattern": "pattern75",
-    "description": "Generated Rule Pattern 75"
+    "dst_port": [
+      25,
+      21,
+      8080,
+      23
+    ],
+    "payload_pattern": "%2e%2e%2f",
+    "description": "Evasion detection rule #75",
+    "severity": "MEDIUM",
+    "confidence": 0.89,
+    "reference": "T1070",
+    "response": "ALERT"
   },
   {
     "id": 76,
+    "category": "SQL_INJECTION",
     "protocol": "TCP",
-    "dst_port": 86,
-    "flags": "S",
-    "payload_pattern": "pattern76",
-    "description": "Generated Rule Pattern 76"
+    "dst_port": [
+      143,
+      110,
+      443
+    ],
+    "payload_pattern": "' OR '1'='1",
+    "description": "Sql Injection detection rule #76",
+    "severity": "HIGH",
+    "confidence": 0.91,
+    "reference": "CWE-89",
+    "response": "BLOCK"
   },
   {
     "id": 77,
+    "category": "DATA_EXFILTRATION",
     "protocol": "TCP",
-    "dst_port": 87,
-    "flags": "PA",
-    "payload_pattern": "pattern77",
-    "description": "Generated Rule Pattern 77"
+    "dst_port": [
+      3306,
+      110
+    ],
+    "payload_pattern": "SELECT * FROM users",
+    "description": "Data Exfiltration detection rule #77",
+    "severity": "HIGH",
+    "confidence": 0.7,
+    "reference": "T1041",
+    "response": "BLOCK"
   },
   {
     "id": 78,
+    "category": "BUFFER_OVERFLOW",
     "protocol": "TCP",
-    "dst_port": 88,
-    "flags": "S",
-    "payload_pattern": "pattern78",
-    "description": "Generated Rule Pattern 78"
+    "dst_port": [
+      23,
+      21,
+      636
+    ],
+    "payload_pattern": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "description": "Buffer Overflow detection rule #78",
+    "severity": "HIGH",
+    "confidence": 0.79,
+    "reference": "CWE-120",
+    "response": "BLOCK"
   },
   {
     "id": 79,
+    "category": "SQL_INJECTION",
     "protocol": "TCP",
-    "dst_port": 89,
-    "flags": "PA",
-    "payload_pattern": "pattern79",
-    "description": "Generated Rule Pattern 79"
+    "dst_port": [
+      22,
+      443,
+      3389,
+      3306
+    ],
+    "payload_pattern": "' OR '1'='1",
+    "description": "Sql Injection detection rule #79",
+    "severity": "HIGH",
+    "confidence": 0.78,
+    "reference": "CWE-89",
+    "response": "BLOCK"
   },
   {
     "id": 80,
+    "category": "EVASION",
     "protocol": "TCP",
-    "dst_port": 80,
-    "flags": "S",
-    "payload_pattern": "pattern80",
-    "description": "Generated Rule Pattern 80"
+    "dst_port": [
+      143
+    ],
+    "payload_pattern": "%2e%2e%2f",
+    "description": "Evasion detection rule #80",
+    "severity": "MEDIUM",
+    "confidence": 0.99,
+    "reference": "T1070",
+    "response": "ALERT"
   },
   {
     "id": 81,
+    "category": "WEB_SHELL",
     "protocol": "TCP",
-    "dst_port": 81,
-    "flags": "PA",
-    "payload_pattern": "pattern81",
-    "description": "Generated Rule Pattern 81"
+    "dst_port": [
+      25
+    ],
+    "payload_pattern": "<?php system(",
+    "description": "Web Shell detection rule #81",
+    "severity": "CRITICAL",
+    "confidence": 0.82,
+    "reference": "T1505.003",
+    "response": "BLOCK_IP"
   },
   {
     "id": 82,
+    "category": "CUSTOM_TEST",
     "protocol": "TCP",
-    "dst_port": 82,
-    "flags": "S",
-    "payload_pattern": "pattern82",
-    "description": "Generated Rule Pattern 82"
+    "dst_port": [
+      143
+    ],
+    "payload_pattern": "pattern_custom",
+    "description": "Custom Test detection rule #82",
+    "severity": "LOW",
+    "confidence": 0.93,
+    "reference": "CUSTOM",
+    "response": "LOG"
   },
   {
     "id": 83,
+    "category": "EVASION",
     "protocol": "TCP",
-    "dst_port": 83,
-    "flags": "PA",
-    "payload_pattern": "pattern83",
-    "description": "Generated Rule Pattern 83"
+    "dst_port": [
+      21,
+      389,
+      22
+    ],
+    "payload_pattern": "%2e%2e%2f",
+    "description": "Evasion detection rule #83",
+    "severity": "MEDIUM",
+    "confidence": 0.86,
+    "reference": "T1070",
+    "response": "ALERT"
   },
   {
     "id": 84,
+    "category": "DATA_EXFILTRATION",
     "protocol": "TCP",
-    "dst_port": 84,
-    "flags": "S",
-    "payload_pattern": "pattern84",
-    "description": "Generated Rule Pattern 84"
+    "dst_port": [
+      22,
+      8080,
+      23,
+      80
+    ],
+    "payload_pattern": "SELECT * FROM users",
+    "description": "Data Exfiltration detection rule #84",
+    "severity": "HIGH",
+    "confidence": 0.82,
+    "reference": "T1041",
+    "response": "BLOCK"
   },
   {
     "id": 85,
+    "category": "SQL_INJECTION",
     "protocol": "TCP",
-    "dst_port": 85,
-    "flags": "PA",
-    "payload_pattern": "pattern85",
-    "description": "Generated Rule Pattern 85"
+    "dst_port": [
+      3389,
+      110
+    ],
+    "payload_pattern": "' OR '1'='1",
+    "description": "Sql Injection detection rule #85",
+    "severity": "HIGH",
+    "confidence": 0.78,
+    "reference": "CWE-89",
+    "response": "BLOCK"
   },
   {
     "id": 86,
+    "category": "DATA_EXFILTRATION",
     "protocol": "TCP",
-    "dst_port": 86,
-    "flags": "S",
-    "payload_pattern": "pattern86",
-    "description": "Generated Rule Pattern 86"
+    "dst_port": [
+      143
+    ],
+    "payload_pattern": "SELECT * FROM users",
+    "description": "Data Exfiltration detection rule #86",
+    "severity": "HIGH",
+    "confidence": 0.74,
+    "reference": "T1041",
+    "response": "BLOCK"
   },
   {
     "id": 87,
+    "category": "CUSTOM_TEST",
     "protocol": "TCP",
-    "dst_port": 87,
-    "flags": "PA",
-    "payload_pattern": "pattern87",
-    "description": "Generated Rule Pattern 87"
+    "dst_port": [
+      23,
+      443,
+      143,
+      12345
+    ],
+    "payload_pattern": "pattern_custom",
+    "description": "Custom Test detection rule #87",
+    "severity": "LOW",
+    "confidence": 0.76,
+    "reference": "CUSTOM",
+    "response": "LOG"
   },
   {
     "id": 88,
+    "category": "PROTOCOL_ANOMALY",
     "protocol": "TCP",
-    "dst_port": 88,
-    "flags": "S",
-    "payload_pattern": "pattern88",
-    "description": "Generated Rule Pattern 88"
+    "dst_port": [
+      22
+    ],
+    "payload_pattern": "HTTP/1.1\r\n\r\nGET",
+    "description": "Protocol Anomaly detection rule #88",
+    "severity": "HIGH",
+    "confidence": 0.72,
+    "reference": "CWE-444",
+    "response": "BLOCK"
   },
   {
     "id": 89,
+    "category": "COMMAND_INJECTION",
     "protocol": "TCP",
-    "dst_port": 89,
-    "flags": "PA",
-    "payload_pattern": "pattern89",
-    "description": "Generated Rule Pattern 89"
+    "dst_port": [
+      23
+    ],
+    "payload_pattern": "cmd.exe",
+    "description": "Command Injection detection rule #89",
+    "severity": "CRITICAL",
+    "confidence": 0.92,
+    "reference": "CWE-78",
+    "response": "BLOCK_IP"
   },
   {
     "id": 90,
+    "category": "CUSTOM_TEST",
     "protocol": "TCP",
-    "dst_port": 80,
-    "flags": "S",
-    "payload_pattern": "pattern90",
-    "description": "Generated Rule Pattern 90"
+    "dst_port": [
+      21,
+      143,
+      8080
+    ],
+    "payload_pattern": "pattern_custom",
+    "description": "Custom Test detection rule #90",
+    "severity": "LOW",
+    "confidence": 0.77,
+    "reference": "CUSTOM",
+    "response": "LOG"
   },
   {
     "id": 91,
+    "category": "WEB_SHELL",
     "protocol": "TCP",
-    "dst_port": 81,
-    "flags": "PA",
-    "payload_pattern": "pattern91",
-    "description": "Generated Rule Pattern 91"
+    "dst_port": [
+      443,
+      3306
+    ],
+    "payload_pattern": "<?php system(",
+    "description": "Web Shell detection rule #91",
+    "severity": "CRITICAL",
+    "confidence": 0.83,
+    "reference": "T1505.003",
+    "response": "BLOCK_IP"
   },
   {
     "id": 92,
+    "category": "CUSTOM_TEST",
     "protocol": "TCP",
-    "dst_port": 82,
-    "flags": "S",
-    "payload_pattern": "pattern92",
-    "description": "Generated Rule Pattern 92"
+    "dst_port": [
+      8080,
+      80,
+      22,
+      21
+    ],
+    "payload_pattern": "pattern_custom",
+    "description": "Custom Test detection rule #92",
+    "severity": "LOW",
+    "confidence": 0.96,
+    "reference": "CUSTOM",
+    "response": "LOG"
   },
   {
     "id": 93,
+    "category": "PATH_TRAVERSAL",
     "protocol": "TCP",
-    "dst_port": 83,
-    "flags": "PA",
-    "payload_pattern": "pattern93",
-    "description": "Generated Rule Pattern 93"
+    "dst_port": [
+      3389,
+      3306,
+      636,
+      389
+    ],
+    "payload_pattern": "../../../",
+    "description": "Path Traversal detection rule #93",
+    "severity": "HIGH",
+    "confidence": 0.73,
+    "reference": "CWE-22",
+    "response": "BLOCK"
   },
   {
     "id": 94,
+    "category": "XML_INJECTION",
     "protocol": "TCP",
-    "dst_port": 84,
-    "flags": "S",
-    "payload_pattern": "pattern94",
-    "description": "Generated Rule Pattern 94"
+    "dst_port": [
+      8080
+    ],
+    "payload_pattern": "<!ENTITY",
+    "description": "Xml Injection detection rule #94",
+    "severity": "HIGH",
+    "confidence": 0.71,
+    "reference": "CWE-611",
+    "response": "BLOCK"
   },
   {
     "id": 95,
+    "category": "CUSTOM_TEST",
     "protocol": "TCP",
-    "dst_port": 85,
-    "flags": "PA",
-    "payload_pattern": "pattern95",
-    "description": "Generated Rule Pattern 95"
+    "dst_port": [
+      21,
+      143,
+      3306
+    ],
+    "payload_pattern": "pattern_custom",
+    "description": "Custom Test detection rule #95",
+    "severity": "LOW",
+    "confidence": 0.96,
+    "reference": "CUSTOM",
+    "response": "LOG"
   },
   {
     "id": 96,
+    "category": "WEB_SHELL",
     "protocol": "TCP",
-    "dst_port": 86,
-    "flags": "S",
-    "payload_pattern": "pattern96",
-    "description": "Generated Rule Pattern 96"
+    "dst_port": [
+      443,
+      143,
+      636
+    ],
+    "payload_pattern": "<?php system(",
+    "description": "Web Shell detection rule #96",
+    "severity": "CRITICAL",
+    "confidence": 0.86,
+    "reference": "T1505.003",
+    "response": "BLOCK_IP"
   },
   {
     "id": 97,
+    "category": "LDAP_INJECTION",
     "protocol": "TCP",
-    "dst_port": 87,
-    "flags": "PA",
-    "payload_pattern": "pattern97",
-    "description": "Generated Rule Pattern 97"
+    "dst_port": [
+      3389
+    ],
+    "payload_pattern": "*)(uid=*",
+    "description": "Ldap Injection detection rule #97",
+    "severity": "HIGH",
+    "confidence": 0.84,
+    "reference": "CWE-90",
+    "response": "BLOCK"
   },
   {
     "id": 98,
+    "category": "SQL_INJECTION",
     "protocol": "TCP",
-    "dst_port": 88,
-    "flags": "S",
-    "payload_pattern": "pattern98",
-    "description": "Generated Rule Pattern 98"
+    "dst_port": [
+      22,
+      389
+    ],
+    "payload_pattern": "' OR '1'='1",
+    "description": "Sql Injection detection rule #98",
+    "severity": "HIGH",
+    "confidence": 0.76,
+    "reference": "CWE-89",
+    "response": "BLOCK"
   },
   {
     "id": 99,
+    "category": "PATH_TRAVERSAL",
     "protocol": "TCP",
-    "dst_port": 89,
-    "flags": "PA",
-    "payload_pattern": "pattern99",
-    "description": "Generated Rule Pattern 99"
+    "dst_port": [
+      12345,
+      23,
+      443,
+      25
+    ],
+    "payload_pattern": "../../../",
+    "description": "Path Traversal detection rule #99",
+    "severity": "HIGH",
+    "confidence": 0.73,
+    "reference": "CWE-22",
+    "response": "BLOCK"
   },
   {
     "id": 100,
+    "category": "WEB_SHELL",
     "protocol": "TCP",
-    "dst_port": 80,
-    "flags": "S",
-    "payload_pattern": "pattern100",
-    "description": "Generated Rule Pattern 100"
+    "dst_port": [
+      3306,
+      8080
+    ],
+    "payload_pattern": "<?php system(",
+    "description": "Web Shell detection rule #100",
+    "severity": "CRITICAL",
+    "confidence": 0.84,
+    "reference": "T1505.003",
+    "response": "BLOCK_IP"
   }
 ]
