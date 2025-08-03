@@ -1,0 +1,19 @@
+{
+  "model_files": {
+    "anomaly_model": "models/anomaly_model.pkl",
+    "anomaly_scaler": "models/anomaly_scaler.pkl",
+    "supervised_model": "models/supervised_model.pkl",
+    "supervised_scaler": "models/supervised_scaler.pkl",
+    "label_encoder": "models/label_encoder.pkl",
+    "feature_names": "models/feature_names.json"
+  },
+  "thresholds": {
+    "anomaly_threshold": -0.3,
+    "confidence_threshold": 0.7
+  },
+  "feature_count": 24,
+  "classes": [
+    "attack",
+    "normal"
+  ]
+}
