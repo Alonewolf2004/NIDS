@@ -2,3 +2,5 @@ datasets/
 models/ 
 git-filter-repo.exe
 ids_database.db
+emergency_training_progress.pkl
+training_progress.pkl
