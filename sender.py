@@ -6,7 +6,7 @@ import sys
 from datetime import datetime
 
 # Simple Configuration
-TARGET_IP = "192.168.0.101"
+TARGET_IP = "192.168.0.27"
 TARGET_PORT = 12345
 PACKET_COUNT = 25
 
