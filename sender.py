@@ -1,128 +1,120 @@
-# Stable Traffic Generator - Windows Safe Version
-from scapy.all import IP, TCP, Raw, send
+# Upgraded Traffic Generator - V3
+# Includes a behavioral anomaly attack (Slowloris) to test the core AI model.
+
+from scapy.all import IP, TCP, Raw, send, sr1
 import random
 import time
 import sys
 from datetime import datetime
 
-# Simple Configuration
-TARGET_IP = "192.168.0.27"
-TARGET_PORT = 12345
-PACKET_COUNT = 25
+# --- Configuration ---
+TARGET_IP = "192.168.0.27"  # Default, can be overridden by command line
+TARGET_PORT = 80          # Use a common web port for the Slowloris test
+PACKET_COUNT = 15
 
-# Attack patterns
-attacks = [
-    b"pattern8", b"pattern9", b"pattern10", b"pattern11", b"pattern12",
+# --- Payloads for Mixed Traffic Test ---
+signature_attacks = [
     b"SELECT * FROM users", b"' OR '1'='1", b"<script>alert('xss')</script>",
     b"../../../etc/passwd", b"cmd.exe /c dir", b"DROP TABLE users"
 ]
-
-# Normal traffic
-normal = [
-    b"hello world", b"normal data", b"status ok", b"heartbeat", 
-    b"HTTP/1.1 200 OK", b"user login", b"session active", b"file uploaded"
-]
-
-# Stats
-sent = 0
-errors = 0
+normal_payloads = [ b"hello world", b"normal data", b"status ok" ]
 
 def log_msg(msg):
+    """Prints a message with a timestamp."""
     timestamp = datetime.now().strftime("%H:%M:%S")
     print(f"[{timestamp}] {msg}")
 
-def send_packet(payload, num):
-    global sent, errors
-    try:
+# --- Test Scenario 1: Mixed Signature/Normal Traffic ---
+def run_mixed_traffic_test(target_ip, target_port, packet_count):
+    # This function remains the same
+    log_msg("Starting Mixed Traffic Test...")
+    all_payloads = signature_attacks + normal_payloads
+    for i in range(1, packet_count + 1):
+        payload = random.choice(all_payloads)
         sport = random.randint(1024, 65535)
-        pkt = IP(dst=TARGET_IP) / TCP(sport=sport, dport=TARGET_PORT) / Raw(load=payload)
+        pkt = IP(dst=target_ip) / TCP(sport=sport, dport=target_port) / Raw(load=payload)
         send(pkt, verbose=False)
-        
-        ptype = "ATTACK" if payload in attacks else "NORMAL"
-        log_msg(f"Packet #{num:02d} | {ptype} | Port {sport} | {len(payload)} bytes")
-        sent += 1
-        
-    except Exception as e:
-        log_msg(f"ERROR sending packet #{num}: {e}")
-        errors += 1
+        ptype = "ATTACK (Signature)" if payload in signature_attacks else "NORMAL"
+        log_msg(f"Packet #{i:02d} | {ptype} | Port {sport} -> {target_port}")
+        time.sleep(random.uniform(0.5, 2.0))
+    log_msg("Mixed Traffic Test completed.")
 
-def send_split(payload, num):
-    global sent, errors
-    if len(payload) < 3:
-        send_packet(payload, num)
-        return
-        
-    try:
-        mid = len(payload) // 2
-        part1, part2 = payload[:mid], payload[mid:]
+# --- Test Scenario 2: AI Port Scan Attack ---
+def run_port_scan_test(target_ip):
+    # This function remains the same
+    log_msg("Starting AI Port Scan Test...")
+    ports_to_scan = [21, 22, 23, 25, 53, 80, 110, 139, 443, 445, 1433, 3306, 3389, 8080]
+    random.shuffle(ports_to_scan)
+    log_msg(f"Scanning {len(ports_to_scan)} ports on {target_ip}...")
+    for i, port in enumerate(ports_to_scan):
         sport = random.randint(1024, 65535)
+        pkt = IP(dst=target_ip) / TCP(sport=sport, dport=port, flags="S")
+        send(pkt, verbose=False)
+        log_msg(f"Scan #{i+1:02d} | SENT SYN PACKET | Port {sport} -> {port}")
+        time.sleep(random.uniform(0.1, 0.3))
+    log_msg("AI Port Scan Test completed.")
+
+# --- NEW Test Scenario 3: AI "Slow Drip" Anomaly ---
+def run_slowloris_test(target_ip, target_port):
+    log_msg("Starting AI 'Slow Drip' Anomaly Test...")
+    duration = 75  # Run for 75 seconds to ensure the flow is long
+    keep_alive_interval = 15  # Send a keep-alive packet every 15 seconds
+    
+    sport = random.randint(1024, 65535)
+    
+    try:
+        # Step 1: Establish a connection (or at least start one) with a SYN packet
+        syn_pkt = IP(dst=target_ip) / TCP(sport=sport, dport=target_port, flags="S")
+        send(syn_pkt, verbose=False)
+        log_msg(f"Connection initiated to {target_ip}:{target_port}")
         
-        pkt1 = IP(dst=TARGET_IP) / TCP(sport=sport, dport=TARGET_PORT) / Raw(load=part1)
-        pkt2 = IP(dst=TARGET_IP) / TCP(sport=sport+1, dport=TARGET_PORT) / Raw(load=part2)
+        end_time = time.time() + duration
+        next_keep_alive = time.time() + keep_alive_interval
+
+        # Step 2: Keep the connection alive with tiny, infrequent packets
+        while time.time() < end_time:
+            if time.time() >= next_keep_alive:
+                keep_alive_pkt = IP(dst=target_ip) / TCP(sport=sport, dport=target_port, flags="A") / Raw(load=".")
+                send(keep_alive_pkt, verbose=False)
+                log_msg(f"Sent keep-alive packet to hold connection open...")
+                next_keep_alive = time.time() + keep_alive_interval
+            time.sleep(1)
         
-        send(pkt1, verbose=False)
-        time.sleep(0.3)
-        send(pkt2, verbose=False)
-        
-        ptype = "ATTACK-SPLIT" if payload in attacks else "NORMAL-SPLIT"
-        log_msg(f"Packet #{num:02d} | {ptype} | Ports {sport},{sport+1} | {len(part1)}+{len(part2)} bytes")
-        sent += 2
+        # Step 3: Close the connection
+        fin_pkt = IP(dst=target_ip) / TCP(sport=sport, dport=target_port, flags="F")
+        send(fin_pkt, verbose=False)
+        log_msg("Connection closed.")
         
     except Exception as e:
-        log_msg(f"ERROR sending split packet #{num}: {e}")
-        errors += 1
+        log_msg(f"Error during Slow Drip test: {e}")
+        
+    log_msg("AI 'Slow Drip' Anomaly Test completed. The IDS will analyze the long-duration flow.")
 
 def main():
-    global TARGET_IP, TARGET_PORT, PACKET_COUNT
-    
-    # Simple command line parsing
+    target_ip = TARGET_IP
     if len(sys.argv) > 1:
-        TARGET_IP = sys.argv[1]
-    if len(sys.argv) > 2:
-        TARGET_PORT = int(sys.argv[2])
-    if len(sys.argv) > 3:
-        PACKET_COUNT = int(sys.argv[3])
+        target_ip = sys.argv[1]
+
+    print("=" * 50)
+    print("    ASAP IDS Test Sender V3")
+    print("=" * 50)
+    print(f"Target IP: {target_ip}")
+    print("\nSelect a test to run:")
+    print("  1: Mixed Traffic Test (Tests Signature Engine)")
+    print("  2: AI Port Scan Test (Tests Heuristic Scanner)")
+    print("  3: AI 'Slow Drip' Anomaly Test (Tests Core AI Model)")
     
-    print("=" * 50)
-    print("    Stable Traffic Generator")
-    print("=" * 50)
-    print(f"Target: {TARGET_IP}:{TARGET_PORT}")
-    print(f"Packets: {PACKET_COUNT}")
+    choice = input("Enter your choice (1, 2, or 3): ")
     print("-" * 50)
-    
-    # Mix payloads
-    all_payloads = attacks + normal
-    
-    start_time = time.time()
-    
-    try:
-        for i in range(1, PACKET_COUNT + 1):
-            payload = random.choice(all_payloads)
-            
-            # 30% chance to split packet
-            if random.random() < 0.3:
-                send_split(payload, i)
-            else:
-                send_packet(payload, i)
-            
-            # Random delay
-            if i < PACKET_COUNT:
-                time.sleep(random.uniform(0.5, 2.0))
-        
-        runtime = time.time() - start_time
-        
-        print("-" * 50)
-        print("COMPLETED")
-        print(f"Runtime: {runtime:.1f} seconds")
-        print(f"Packets sent: {sent}")
-        print(f"Errors: {errors}")
-        print(f"Success rate: {((sent-errors)/max(sent,1)*100):.1f}%")
-        print("-" * 50)
-        
-    except KeyboardInterrupt:
-        print("\nStopped by user")
-    except Exception as e:
-        print(f"Error: {e}")
+
+    if choice == '1':
+        run_mixed_traffic_test(target_ip, 12345, PACKET_COUNT)
+    elif choice == '2':
+        run_port_scan_test(target_ip)
+    elif choice == '3':
+        run_slowloris_test(target_ip, TARGET_PORT)
+    else:
+        print("Invalid choice. Exiting.")
 
 if __name__ == "__main__":
     main()
