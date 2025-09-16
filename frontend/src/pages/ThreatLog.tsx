@@ -4,15 +4,16 @@ import { ThreatLogTable } from "@/components/ThreatLogTable";
 import { Shield, ArrowLeft, RefreshCw } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-// Mock data interface
-interface Threat {
-  id: string;
-  timestamp: string;
-  sourceIp: string;
-  destinationIp: string;
-  threatType: "Signature" | "AI";
-  description: string;
+// Define the Threat interface. This is the single source of truth.
+export interface Threat {
+  id: number;
+  timestamp: number;
+  source_ip: string;
+  dest_ip: string;
+  threat_type: string;
+  details: string;
   blocked: boolean;
+  confidence: number;
 }
 
 const ThreatLog = () => {
@@ -20,70 +21,30 @@ const ThreatLog = () => {
   const [threats, setThreats] = useState<Threat[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Mock data generation
-  const generateMockThreats = (): Threat[] => {
-    const mockThreats: Threat[] = [
-      {
-        id: "1",
-        timestamp: "2024-01-15 14:30:25",
-        sourceIp: "192.168.1.100",
-        destinationIp: "10.0.0.5",
-        threatType: "Signature",
-        description: "SQL Injection attempt detected",
-        blocked: true
-      },
-      {
-        id: "2",
-        timestamp: "2024-01-15 14:28:12",
-        sourceIp: "203.0.113.45",
-        destinationIp: "10.0.0.10",
-        threatType: "AI",
-        description: "Suspicious network pattern - potential data exfiltration",
-        blocked: true
-      },
-      {
-        id: "3",
-        timestamp: "2024-01-15 14:25:03",
-        sourceIp: "198.51.100.78",
-        destinationIp: "10.0.0.20",
-        threatType: "Signature",
-        description: "Port scanning activity from external source",
-        blocked: false
-      },
-      {
-        id: "4",
-        timestamp: "2024-01-15 14:22:45",
-        sourceIp: "172.16.0.55",
-        destinationIp: "10.0.0.15",
-        threatType: "AI",
-        description: "Anomalous traffic volume detected",
-        blocked: true
-      },
-      {
-        id: "5",
-        timestamp: "2024-01-15 14:20:18",
-        sourceIp: "203.0.113.99",
-        destinationIp: "10.0.0.25",
-        threatType: "Signature",
-        description: "Cross-site scripting (XSS) attempt blocked",
-        blocked: true
-      }
-    ];
-    return mockThreats;
-  };
-
   const fetchThreats = async () => {
     setIsLoading(true);
-    // TODO: Call API endpoint /api/threats
-    // Simulate API call delay
-    setTimeout(() => {
-      setThreats(generateMockThreats());
+    try {
+      const response = await fetch("http://127.0.0.1:5000/api/threats");
+      const data = await response.json();
+      if (response.ok) {
+        const sortedThreats = data.threats.sort((a: Threat, b: Threat) => b.timestamp - a.timestamp);
+        setThreats(sortedThreats);
+      } else {
+        console.error("Error fetching threats:", data.error);
+      }
+    } catch (error) {
+      console.error("API call failed:", error);
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   useEffect(() => {
     fetchThreats();
+    const interval = setInterval(() => {
+      fetchThreats();
+    }, 15000);
+    return () => clearInterval(interval);
   }, []);
 
   const handleRefresh = () => {
@@ -138,20 +99,24 @@ const ThreatLog = () => {
             </div>
             <div className="bg-card rounded-lg p-4 border">
               <div className="text-2xl font-bold text-primary">
-                {threats.filter(t => t.threatType === "AI").length}
+                {threats.filter(t => t.threat_type === "ai_detection").length}
               </div>
               <div className="text-sm text-muted-foreground">AI Detected</div>
             </div>
             <div className="bg-card rounded-lg p-4 border">
               <div className="text-2xl font-bold text-secondary-foreground">
-                {threats.filter(t => t.threatType === "Signature").length}
+                {threats.filter(t => t.threat_type === "signature").length}
               </div>
               <div className="text-sm text-muted-foreground">Signature Based</div>
             </div>
           </div>
 
           {/* Threat Log Table */}
-          <ThreatLogTable threats={threats} />
+          {isLoading ? (
+            <div className="text-center text-muted-foreground">Loading threat log...</div>
+          ) : (
+            <ThreatLogTable threats={threats} />
+          )}
         </div>
       </main>
     </div>

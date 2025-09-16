@@ -9,8 +9,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 
-// IMPORT the Threat interface from the ThreatLog component
-import { Threat } from "../pages/ThreatLog";
+// Import the Threat interface from the ThreatLog component
+import { Threat } from "../pages/ThreatLog"; // Adjust the path as needed
 
 // This interface now correctly uses the imported Threat type
 interface ThreatLogTableProps {
