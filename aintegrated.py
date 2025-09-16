@@ -6,9 +6,10 @@ VERSION 6.2 - FINAL & STABLE
 - SIGNATURES: Includes a SignatureMatcher that supports the `signature.json` format.
 - INTEGRATION: Fully integrated with the trained RandomForest model pipeline.
 """
-
+from scapy.all import IP, TCP, UDP
 import json
 import sys
+sys.stdout.reconfigure(encoding='utf-8')
 import signal
 import argparse
 import os

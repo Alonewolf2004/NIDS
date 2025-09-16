@@ -1,0 +1,170 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 210 20% 98%;
+    --foreground: 210 11% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 210 11% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 11% 15%;
+    --primary: 0, 90%, 63%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 210 11% 15%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 210 6% 46%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 210 11% 15%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 210 20% 90%;
+    --input: 210 20% 90%;
+    --ring: 210 100% 50%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Hacker/Cyberpunk Theme */
+    --background: 220 13% 9%;
+    --foreground: 120 100% 85%;
+
+    --card: 220 13% 7%;
+    --card-foreground: 120 100% 85%;
+
+    --popover: 220 13% 7%;
+    --popover-foreground: 120 100% 85%;
+
+    --primary: 0 100% 50%;
+    --primary-foreground: 220 13% 9%;
+
+    --secondary: 220 13% 15%;
+    --secondary-foreground: 120 100% 85%;
+
+    --muted: 220 13% 15%;
+    --muted-foreground: 120 30% 60%;
+
+    --accent: 120 100% 50%;
+    --accent-foreground: 220 13% 9%;
+
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 220 13% 9%;
+
+    --border: 120 100% 20%;
+    --input: 220 13% 15%;
+    --ring: 120 100% 50%;
+
+    /* Cyber Colors */
+    --cyber-green: 120 100% 50%;
+    --cyber-green-glow: 120 100% 50% / 0.5;
+    --cyber-red: 0 100% 50%;
+    --cyber-red-glow: 0 100% 50% / 0.5;
+    --cyber-blue: 200 100% 50%;
+    --cyber-yellow: 60 100% 50%;
+    --cyber-purple: 280 100% 50%;
+    
+    /* Matrix Colors */
+    --matrix-green: 120 100% 25%;
+    --matrix-green-bright: 120 100% 50%;
+    --matrix-green-dim: 120 50% 15%;
+
+    --sidebar-background: 220 13% 9%;
+    --sidebar-foreground: 120 100% 85%;
+    --sidebar-primary: 120 100% 50%;
+    --sidebar-primary-foreground: 220 13% 9%;
+    --sidebar-accent: 220 13% 15%;
+    --sidebar-accent-foreground: 120 100% 85%;
+    --sidebar-border: 120 100% 20%;
+    --sidebar-ring: 120 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-mono;
+    background-image: 
+      radial-gradient(circle at 25% 25%, hsl(var(--cyber-green) / 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, hsl(var(--cyber-blue) / 0.05) 0%, transparent 50%),
+      linear-gradient(90deg, transparent 70%, hsl(var(--cyber-green) / 0.03) 70%, hsl(var(--cyber-green) / 0.03) 71%, transparent 71%);
+    background-size: 100vw 100vh, 100vw 100vh, 20px 20px;
+    animation: matrix-bg 20s linear infinite;
+  }
+
+  /* Matrix-style background animation */
+  @keyframes matrix-bg {
+    0% { background-position: 0% 0%, 0% 0%, 0 0; }
+    100% { background-position: 100% 100%, -100% -100%, 20px 20px; }
+  }
+
+  /* Glowing effects */
+  .glow {
+    box-shadow: 0 0 5px hsl(var(--primary)), 0 0 10px hsl(var(--primary)), 0 0 15px hsl(var(--primary));
+  }
+
+  .glow-text {
+    text-shadow: 0 0 5px hsl(var(--primary)), 0 0 10px hsl(var(--primary));
+  }
+
+  /* Scanline effect */
+  .scanlines::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      transparent 50%,
+      hsl(var(--cyber-green) / 0.03) 50%,
+      hsl(var(--cyber-green) / 0.03) 51%,
+      transparent 51%
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+    animation: scanlines 0.1s linear infinite;
+  }
+
+  @keyframes scanlines {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(4px); }
+  }
+
+  /* Terminal cursor */
+  .terminal-cursor::after {
+    content: '█';
+    animation: blink 1s infinite;
+    color: hsl(var(--primary));
+  }
+
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  /* Typing animation */
+  .typing {
+    border-right: 2px solid hsl(var(--primary));
+    animation: typing 2s steps(20) infinite, blink-cursor 1s infinite;
+  }
+
+  @keyframes typing {
+    0% { width: 0; }
+    50% { width: 100%; }
+    100% { width: 0; }
+  }
+
+  @keyframes blink-cursor {
+    0%, 50% { border-color: hsl(var(--primary)); }
+    51%, 100% { border-color: transparent; }
+  }
+}
