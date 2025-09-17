@@ -8,7 +8,7 @@ import sys
 from datetime import datetime
 
 # --- Configuration ---
-TARGET_IP = "192.168.0.27"  # Default, can be overridden by command line
+TARGET_IP = "100.94.161.42"  # Default, can be overridden by command line
 TARGET_PORT = 80          # Use a common web port for the Slowloris test
 PACKET_COUNT = 15
 
