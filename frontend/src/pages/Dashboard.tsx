@@ -231,7 +231,7 @@ const Dashboard = () => {
               onClick={handleStart}
               disabled={isRunning || isInitializing}
               size="lg"
-              className="min-w-[140px] font-mono uppercase tracking-wider bg-primary hover:bg-primary/80 text-black border border-primary glow hover:glow transition-all duration-300 animate-cyber-pulse"
+              className="min-w-[140px] font-mono uppercase tracking-wider bg-primary hover:bg-primary/80 text-black border border-primary hover:glow transition-all duration-300 "
             >
               <span className="mr-2">▶</span>
               {isInitializing ? "Initializing..." : "Initialize"}
