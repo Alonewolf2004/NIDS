@@ -8,9 +8,9 @@ import sys
 from datetime import datetime
 
 # --- Configuration ---
-TARGET_IP = "100.94.161.42"  # Default, can be overridden by command line
-TARGET_PORT = 80          # Use a common web port for the Slowloris test
-PACKET_COUNT = 15
+TARGET_IP = "10.171.213.153"  # The IP of the machine running the NIDS (can be overridden by command line)
+TARGET_PORT = 12345           # The port for mixed traffic tests
+PACKET_COUNT = 40
 
 # --- Payloads for Mixed Traffic Test ---
 signature_attacks = [
@@ -30,7 +30,7 @@ def run_mixed_traffic_test(target_ip, target_port, packet_count):
     log_msg("Starting Mixed Traffic Test...")
     all_payloads = signature_attacks + normal_payloads
     for i in range(1, packet_count + 1):
-        payload = random.choice(all_payloads)
+        payload = random.choice(all_payloads) # nosec
         sport = random.randint(1024, 65535)
         pkt = IP(dst=target_ip) / TCP(sport=sport, dport=target_port) / Raw(load=payload)
         send(pkt, verbose=False)
@@ -46,7 +46,7 @@ def run_port_scan_test(target_ip):
     ports_to_scan = [21, 22, 23, 25, 53, 80, 110, 139, 443, 445, 1433, 3306, 3389, 8080]
     random.shuffle(ports_to_scan)
     log_msg(f"Scanning {len(ports_to_scan)} ports on {target_ip}...")
-    for i, port in enumerate(ports_to_scan):
+    for i, port in enumerate(ports_to_scan): # nosec
         sport = random.randint(1024, 65535)
         pkt = IP(dst=target_ip) / TCP(sport=sport, dport=port, flags="S")
         send(pkt, verbose=False)
@@ -57,6 +57,10 @@ def run_port_scan_test(target_ip):
 # --- NEW Test Scenario 3: AI "Slow Drip" Anomaly ---
 def run_slowloris_test(target_ip, target_port):
     log_msg("Starting AI 'Slow Drip' Anomaly Test...")
+    # This test simulates a behavioral anomaly where a connection is established
+    # and kept alive with minimal, infrequent traffic, rather than a traditional
+    # Slowloris attack which typically involves many concurrent partial HTTP requests.
+    # It's designed to test the NIDS's ability to detect long-duration, low-activity flows.
     duration = 75  # Run for 75 seconds to ensure the flow is long
     keep_alive_interval = 15  # Send a keep-alive packet every 15 seconds
     
@@ -108,11 +112,11 @@ def main():
     print("-" * 50)
 
     if choice == '1':
-        run_mixed_traffic_test(target_ip, 12345, PACKET_COUNT)
+        run_mixed_traffic_test(target_ip, TARGET_PORT, PACKET_COUNT)
     elif choice == '2':
         run_port_scan_test(target_ip)
     elif choice == '3':
-        run_slowloris_test(target_ip, TARGET_PORT)
+        run_slowloris_test(target_ip, 80) # Slowloris test is best against a web port
     else:
         print("Invalid choice. Exiting.")
 

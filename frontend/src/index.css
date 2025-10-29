@@ -10,9 +10,9 @@ All colors MUST be HSL.
   :root {
     --background: 210 20% 98%;
     --foreground: 210 11% 15%;
-    --card: 0 0% 100%;
+    --card: 0 0% 97%; /* Changed from pure white to a light grey */
     --card-foreground: 210 11% 15%;
-    --popover: 0 0% 100%;
+    --popover: 0 0% 97%; /* Changed from pure white to a light grey */
     --popover-foreground: 210 11% 15%;
     --primary: 0, 90%, 63%;
     --primary-foreground: 0 0% 100%;
@@ -24,8 +24,8 @@ All colors MUST be HSL.
     --accent-foreground: 210 11% 15%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 210 20% 90%;
-    --input: 210 20% 90%;
+    --border: 210 20% 85%; /* Made borders darker */
+    --input: 210 20% 85%; /* Made input borders darker to match */
     --ring: 210 100% 50%;
     --radius: 0.5rem;
   }

@@ -34,9 +34,11 @@ logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
 DEFAULT_MODELS_PATH = "models/"
 DEFAULT_SIGNATURE_FILE = "signature.json"
 DEFAULT_DB_FILE = "ids_database.db"
-DEFAULT_BLOCK_DURATION = 300
-FLOW_TIMEOUT = 60
-AI_CONFIDENCE_THRESHOLD = 0.7
+DEFAULT_BLOCK_DURATION = 300 # seconds
+FLOW_TIMEOUT = 60 # seconds
+AI_CONFIDENCE_THRESHOLD = 0.8 # Default confidence threshold (0.0 to 1.0)
+SYN_THRESHOLD_DEFAULT = 5   # number of initial SYNs to consider malicious
+SYN_WINDOW_DEFAULT = 5     
 
 # Setup basic logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', stream=sys.stdout)
@@ -132,9 +134,10 @@ class NetworkBlocker:
     def block_ip(self, ip_address, reason):
         with self.lock:
             if ip_address in self.blocked_ips: return False
-            if ip_address.startswith(('127.', '10.', '192.168.')):
-                logger.warning(f"Skipping block of local/private IP: {ip_address}")
-                return False
+            # Safety feature: only block private IPs if explicitly allowed for local testing
+            if not getattr(self.config, 'allow_local_blocking', False) and ip_address.startswith(('127.', '10.', '192.168.','100')):
+                logger.warning(f"Skipping block of local/private IP: {ip_address}. To block, enable 'Allow Local Blocking' in config.")
+                return False # Do not block private IPs unless allowed
             try:
                 logger.info(f"Attempting to block {ip_address} for {self.block_duration}s. Reason: {reason}")
                 subprocess.run(["iptables", "-I", "INPUT", "1", "-s", ip_address, "-j", "DROP"], check=True, capture_output=True, text=True)
@@ -142,18 +145,23 @@ class NetworkBlocker:
                 self.blocked_ips[ip_address] = unblock_time
                 return True
             except (subprocess.CalledProcessError, FileNotFoundError) as e:
-                logger.error(f"Failed to block {ip_address} using iptables. Is it installed and are you root? Error: {e.stderr}")
+                error_message = e.stderr if hasattr(e, 'stderr') else str(e)
+                logger.error(f"Failed to block {ip_address} using iptables. Error: {error_message.strip()}")
+                if "Permission denied" in error_message:
+                    logger.error(">>> HINT: 'Permission denied' suggests the application was not run with root privileges. Try running with 'sudo'.")
                 return False
 
     def unblock_ip(self, ip_address):
         with self.lock:
-            if ip_address not in self.blocked_ips: return
+            if ip_address not in self.blocked_ips: return False
             try:
                 logger.info(f"Unblocking {ip_address}")
                 subprocess.run(["iptables", "-D", "INPUT", "-s", ip_address, "-j", "DROP"], check=True, capture_output=True, text=True)
                 del self.blocked_ips[ip_address]
+                return True
             except (subprocess.CalledProcessError, FileNotFoundError) as e:
                 logger.warning(f"Failed to unblock {ip_address}. It might have been unblocked manually. Error: {e.stderr}")
+                return False
 
     def cleanup_loop(self):
         while True:
@@ -246,11 +254,11 @@ class FlowTracker:
             'fwd iat total': np.sum(fwd_iat), 'fwd iat mean': np.mean(fwd_iat),
             'fwd iat std': np.std(fwd_iat), 'fwd iat max': np.max(fwd_iat),
             'fwd iat min': np.min(fwd_iat),
-            'fwd psh flags': sum(1 for p in fwd_pkts if p['flags'] & PSH),
-            'fwd urg flags': sum(1 for p in fwd_pkts if p['flags'] & URG),
-            'fwd header length': len(fwd_pkts) * 20, 'bwd header length': len(bwd_pkts) * 20,
+            'fwd psh flags': sum(1 for p in fwd_pkts if p['flags'] & PSH), # Assuming TCP
+            'fwd urg flags': sum(1 for p in fwd_pkts if p['flags'] & URG), # Assuming TCP
+            'fwd header length': len(fwd_pkts) * 20, 'bwd header length': len(bwd_pkts) * 20, # Assuming typical TCP/IP header size
             'fwd packets/s': len(fwd_pkts) / max(1e-6, flow_duration / 1_000_000),
-            'bwd packets/s': len(bwd_pkts) / max(1e-6, flow_duration / 1_000_000),
+            'bwd packets/s': len(bwd_pkts) / max(1e-6, flow_duration / 1_000_000), # Avoid division by zero
             'min packet length': min(p['len'] for p in packets), 'max packet length': max(p['len'] for p in packets),
             'packet length mean': np.mean([p['len'] for p in packets]), 'packet length std': np.std([p['len'] for p in packets]),
             'packet length variance': np.var([p['len'] for p in packets]),
@@ -260,8 +268,8 @@ class FlowTracker:
             'cwe flag count': 0, 'ece flag count': sum(1 for p in packets if p['flags'] & ECE),
             'down/up ratio': len(bwd_pkts) / len(fwd_pkts) if len(fwd_pkts) > 0 else 0,
             'average packet size': np.mean([p['len'] for p in packets]),
-            'avg fwd segment size': np.mean(fwd_pkt_lengths), 'avg bwd segment size': np.mean(bwd_pkt_lengths),
-            'init_win_bytes_forward': -1, 'init_win_bytes_backward': -1,
+            'avg fwd segment size': np.mean(fwd_pkt_lengths), 'avg bwd segment size': np.mean(bwd_pkt_lengths), # Use np.mean on potentially [0]
+            'init_win_bytes_forward': -1, 'init_win_bytes_backward': -1, # These features are not currently extracted from packets
             'act_data_pkt_fwd': sum(1 for p in fwd_pkts if p['len'] > 20), 'min_seg_size_forward': -1,
             'src_ip': flow['src'], 'dst_ip': flow['dst']
         }
@@ -328,9 +336,44 @@ class EnhancedAIIDS:
         self.ai_manager = AIModelManager(config.models_path)
         self.threat_db = ThreatDatabase(config.db_file)
         self.network_blocker = NetworkBlocker(config.block_duration) if config.enable_blocking else None
+        if self.network_blocker: self.network_blocker.config = config # Pass full config to blocker
+        self.ip_threat_counts = defaultdict(int)
+        self.ip_threat_threshold = 3 # Block after this many threats (i.e., on the 3rd threat)
+        self.syn_timestamps = defaultdict(list)   # src_ip -> list[timestamps]
+        self.syn_threshold = getattr(config, "syn_threshold", SYN_THRESHOLD_DEFAULT)
+        self.syn_window = getattr(config, "syn_window", SYN_WINDOW_DEFAULT)
 
     def process_packet(self, pkt):
         self.packet_count += 1
+
+        try:
+            if pkt.haslayer(TCP) and pkt.haslayer(IP):
+                flags = int(pkt[TCP].flags)
+                is_syn = bool(flags & 0x02)
+                is_ack = bool(flags & 0x10)
+                if is_syn and not is_ack:
+                    src_ip = pkt[IP].src
+                    now = time.time()
+                    # prune old timestamps
+                    lst = self.syn_timestamps[src_ip]
+                    lst = [t for t in lst if now - t < self.syn_window]
+                    lst.append(now)
+                    self.syn_timestamps[src_ip] = lst
+                    if len(lst) >= self.syn_threshold:
+                        desc = f"SYN flood detected: {len(lst)} SYNs in {self.syn_window}s"
+                        logger.warning(f"[SYN-FLOOD] {src_ip} -> {pkt[IP].dst} | {desc}")
+                        # Block if configured
+                        if self.network_blocker:
+                            blocked = self.network_blocker.block_ip(src_ip, reason=desc)
+                            # Log to DB whether blocked or not
+                            self.threat_db.log_threat(src_ip, pkt[IP].dst, "syn_flood", desc, bool(blocked), 1.0)
+                        # clear timestamps to avoid repeated immediate blocks
+                        self.syn_timestamps[src_ip].clear()
+        except Exception as e:
+            logger.debug(f"SYN detection: failed to process flags: {e}")
+
+        
+
         signature_match = self.signature_matcher.check_packet(pkt)
         if signature_match:
             self.handle_threat('signature', signature_match, pkt=pkt)
@@ -343,7 +386,7 @@ class EnhancedAIIDS:
             for flow in finished_flows:
                 self.flow_count += 1
                 label, confidence = self.ai_manager.predict_flow(flow)
-                if label not in ['benign', 'error', 'unknown'] and confidence > self.config.ai_confidence:
+                if label not in ['benign', 'error', 'unknown'] and confidence > self.config.ai_confidence: # ai_confidence should be between 0 and 1
                     self.handle_threat('ai_detection', {'predicted_attack': label, 'confidence': confidence}, flow=flow)
             time.sleep(5)
 
@@ -369,7 +412,31 @@ class EnhancedAIIDS:
         else:
             return
 
+        # --- Automated Blocking Logic ---
+        if self.network_blocker and not blocked: # Only apply auto-block if not already blocked in this handler
+            self.ip_threat_counts[src_ip] += 1
+            logger.info(f"Threat count for {src_ip} is now {self.ip_threat_counts[src_ip]}.")
+            if self.ip_threat_counts[src_ip] >= self.ip_threat_threshold:
+                reason = f"High threat frequency ({self.ip_threat_counts[src_ip]} threats)"
+                logger.warning(f"--- AUTO-BLOCK TRIGGERED --- | IP: {src_ip} | Reason: {reason}")
+                # Use a separate variable for the result of the auto-block attempt
+                auto_blocked_successfully = self.network_blocker.block_ip(src_ip, reason=reason)
+                if auto_blocked_successfully:
+                    self.ip_threat_counts[src_ip] = 0 # Reset count after successful block
+                    blocked = True # Ensure the final status passed to the DB is True
+
         self.threat_db.log_threat(src_ip, dst_ip, threat_type, desc, blocked, confidence)
+
+    def reset_stats(self):
+        """Resets the in-memory statistics of the NIDS instance."""
+        logger.info("Resetting NIDS runtime statistics...")
+        self.packet_count = 0
+        self.flow_count = 0
+        self.threat_count = 0
+        self.ip_threat_counts.clear()
+        self.syn_timestamps.clear()
+        # Note: The database is cleared by the API endpoint, not here.
+        logger.info("NIDS runtime statistics have been reset.")
 
     def stats_loop(self):
         while self.running:
@@ -422,8 +489,11 @@ def main():
     parser.add_argument("--signature_file", type=str, default=DEFAULT_SIGNATURE_FILE, help="Path to the signature JSON file")
     parser.add_argument("--enable-blocking", action="store_true", help="Enable automatic IP blocking (requires root/admin)")
     parser.add_argument("--block-duration", type=int, default=DEFAULT_BLOCK_DURATION, help="IP block duration in seconds")
-    parser.add_argument("--db-file", default=DEFAULT_DB_FILE, help="Database file path")
+    parser.add_argument("--db-file", type=str, default=DEFAULT_DB_FILE, help="Database file path")
     parser.add_argument("--ai-confidence", type=float, default=AI_CONFIDENCE_THRESHOLD, help="AI confidence threshold for alerting/blocking")
+    parser.add_argument("--syn-threshold", type=int, default=SYN_THRESHOLD_DEFAULT, help="SYN packets threshold for blocking (per src IP)")
+    parser.add_argument("--syn-window", type=int, default=SYN_WINDOW_DEFAULT, help="Time window (seconds) for SYN counting")
+
     args = parser.parse_args()
 
     if not args.interface:

@@ -8,8 +8,8 @@ import { Label } from "@/components/ui/label";
 interface ConfigurationPanelProps {
   networkInterface: string;
   setNetworkInterface: (value: string) => void;
-  enableBlocking: boolean;
-  setEnableBlocking: (value: boolean) => void;
+  // enableBlocking: boolean;
+  // setEnableBlocking: (value: boolean) => void;
   aiThreshold: number;
   setAiThreshold: (value: number) => void;
   interfaces: string[]; // <--- ADDED THIS LINE
@@ -18,8 +18,8 @@ interface ConfigurationPanelProps {
 export const ConfigurationPanel = ({
   networkInterface,
   setNetworkInterface,
-  enableBlocking,
-  setEnableBlocking,
+  // enableBlocking,
+  // setEnableBlocking,
   aiThreshold,
   setAiThreshold,
   interfaces, // <--- ADDED THIS LINE
@@ -53,7 +53,7 @@ export const ConfigurationPanel = ({
           </Select>
         </div>
 
-        <div className="flex items-center justify-between p-3 border border-primary/20 rounded bg-background/20">
+        {/* <div className="flex items-center justify-between p-3 border border-primary/20 rounded bg-background/20">
           <Label htmlFor="enable-blocking" className="font-mono text-xs uppercase tracking-wider">
             Enable Blocking
           </Label>
@@ -63,7 +63,7 @@ export const ConfigurationPanel = ({
             onCheckedChange={setEnableBlocking}
             className="data-[state=checked]:bg-primary"
           />
-        </div>
+        </div> */}
 
         <div className="space-y-2">
           <Label htmlFor="ai-threshold" className="font-mono text-xs uppercase tracking-wider">AI Confidence Threshold (%)</Label>

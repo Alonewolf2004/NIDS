@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { MetricCard } from "@/components/MetricCard";
 import { StatusIndicator } from "@/components/StatusIndicator";
 import { ConfigurationPanel } from "@/components/ConfigurationPanel";
-import { Activity, Shield, ShieldAlert, Users, FileText } from "lucide-react";
+import { Activity, Shield, ShieldAlert, Users, FileText, Sun, Moon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 
@@ -16,7 +16,12 @@ interface NidsStatus {
   blocked_ips: string[];
 }
 
-const Dashboard = () => {
+interface DashboardProps {
+  theme: 'dark' | 'light';
+  toggleTheme: () => void;
+}
+
+const Dashboard = ({ theme, toggleTheme }: DashboardProps) => {
   const navigate = useNavigate();
 
   // State for NIDS status and metrics, fetched from the API
@@ -26,6 +31,7 @@ const Dashboard = () => {
   const [interfaces, setInterfaces] = useState<string[]>(["Loading..."]);
   const [selectedInterface, setSelectedInterface] = useState("eth0");
   const [enableBlocking, setEnableBlocking] = useState(true);
+  const [allowLocalBlocking, setAllowLocalBlocking] = useState(true); // New state for the demo checkbox
   const [aiThreshold, setAiThreshold] = useState(0.7); // Changed to number for API consistency
   const [isInitializing, setIsInitializing] = useState(false);
 
@@ -35,6 +41,13 @@ const Dashboard = () => {
       const response = await fetch("http://127.0.0.1:5000/api/status");
       if (response.ok) {
         const data = await response.json();
+        // Alert user if a new IP has been blocked
+        if (nidsStatus && data.blocked_ips.length > nidsStatus.blocked_ips.length) {
+          const newBlockedIp = data.blocked_ips.find((ip: string) => !nidsStatus.blocked_ips.includes(ip));
+          if (newBlockedIp) {
+            alert(`🚨 IP Address Blocked: ${newBlockedIp} has been automatically blocked due to high threat activity.`);
+          }
+        }
         setNidsStatus(data);
       }
     } catch (error) {
@@ -63,12 +76,18 @@ const Dashboard = () => {
     fetchInterfaces();
     fetchStatus();
 
-    const interval = setInterval(() => {
-      fetchStatus();
-    }, 5000); // Poll every 5 seconds
+    const interval = setInterval(fetchStatus, 5000); // Poll every 5 seconds
 
     return () => clearInterval(interval);
   }, []);
+
+  // Additional useEffect to manage the initializing state
+  useEffect(() => {
+    // If the NIDS is initializing and the status becomes 'running', stop the initializing state.
+    if (isInitializing && nidsStatus?.running) {
+      setIsInitializing(false);
+    }
+  }, [nidsStatus, isInitializing]);
 
   const handleStart = async () => {
     setIsInitializing(true);
@@ -80,19 +99,21 @@ const Dashboard = () => {
         body: JSON.stringify({
           interface: selectedInterface,
           enableBlocking: enableBlocking,
+          allowLocalBlocking: allowLocalBlocking, // Send the new setting to the backend
           aiConfidence: aiThreshold,
         }),
       });
       if (response.ok) {
         console.log("NIDS started successfully.");
-        // The polling useEffect will now pick up the running status
+        // Immediately check status to update UI faster
+        setTimeout(fetchStatus, 1000);
       } else {
         const errorData = await response.json();
         console.error("Failed to start NIDS:", errorData.message);
+        setIsInitializing(false); // Stop initializing on failure
       }
     } catch (error) {
-      console.error("API call failed:", error);
-    } finally {
+      console.error("API call to start NIDS failed:", error);
       setIsInitializing(false);
     }
   };
@@ -112,6 +133,25 @@ const Dashboard = () => {
       }
     } catch (error) {
       console.error("API call failed:", error);
+    }
+  };
+  
+  const handleUnblock = async (ip: string) => {
+    console.log(`Requesting unblock for ${ip}...`);
+    try {
+      const response = await fetch("http://127.0.0.1:5000/api/unblock", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ip: ip }),
+      });
+      if (response.ok) {
+        console.log(`${ip} unblocked successfully.`);
+        fetchStatus(); // Refresh status to update the list
+      } else {
+        console.error(`Failed to unblock ${ip}.`);
+      }
+    } catch (error) {
+      console.error("API call to unblock failed:", error);
     }
   };
   
@@ -160,6 +200,16 @@ const Dashboard = () => {
                 <FileText className="h-4 w-4" />
                 <span>View Threat Log</span>
               </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={toggleTheme}
+                className="border-primary/30 bg-background/50 hover:bg-primary/10 hover:border-primary/50"
+              >
+                <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <span className="sr-only">Toggle theme</span>
+              </Button>
               <div className="text-sm text-muted-foreground/60 font-mono">
                 <span className="text-primary">[</span>Network Intrusion Detection System<span className="text-primary">]</span>
               </div>
@@ -187,7 +237,7 @@ const Dashboard = () => {
           </div>
 
           {/* Metrics Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <MetricCard
               title="Packets Processed"
               value={packetsProcessed}
@@ -200,16 +250,15 @@ const Dashboard = () => {
               icon={<ShieldAlert className="h-5 w-5" />}
               trend="down"
             />
-            <MetricCard
-              title="Blocked IPs"
-              value={blockedIps}
-              icon={<Users className="h-5 w-5" />}
-              trend="neutral"
-            />
           </div>
 
+          {/* <BlockedIpList
+            blockedIps={nidsStatus?.blocked_ips || []}
+            onUnblock={handleUnblock}
+          /> */}
+
           {/* Status and Configuration */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <StatusIndicator
               isRunning={isRunning}
               lastUpdate={isRunning ? new Date().toLocaleString() : undefined}
@@ -217,13 +266,13 @@ const Dashboard = () => {
             <ConfigurationPanel
               networkInterface={selectedInterface}
               setNetworkInterface={setSelectedInterface}
-              enableBlocking={enableBlocking}
-              setEnableBlocking={setEnableBlocking}
+              // enableBlocking={enableBlocking}
+              // setEnableBlocking={setEnableBlocking}
               aiThreshold={aiThreshold}
               setAiThreshold={setAiThreshold}
               interfaces={interfaces} // Pass the fetched interfaces to the component
             />
-          </div>
+            </div>
 
           {/* Control Buttons */}
           <div className="flex justify-center space-x-4">
